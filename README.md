@@ -1,33 +1,41 @@
-# Vous croyez connaître Git ? Challenge Accepted
+# Website
 
-Vous pensiez maîtriser Git parce que vous savez faire un git commit -m "fix" ? Attendez de découvrir ce qui se cache dans les méandres de cet outil que tout le monde utilise... mais que personne ne comprend vraiment.
+This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
-## Au programme :
+## Installation
 
-Apprendre à travailler sur 3 features en même temps sans devenir fou
+```bash
+yarn
+```
 
-Retrouver CE commit que vous avez supprimé par erreur (et que vous juriez avoir perdu à jamais)
+## Local Development
 
-Débusquer le bug introduit il y a 47 commits sans lire tout l'historique comme un roman policier raté
+```bash
+yarn start
+```
 
-Comprendre les différents workflows et quand les utiliser : Gitflow, GitHub Flow...
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
-Tout ça sur un vrai projet, avec de vrais bugs, de vrais conflits, et de vraies solutions (pas juste des slides Powerpoint soporifiques).
+## Build
 
-## Repartez avec :
+```bash
+yarn build
+```
 
-Une boîte à outils qui vous fera gagner des heures chaque semaine
+This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
-Des bonnes pratiques qui éviteront à votre équipe de vous détester
+## Deployment
 
-La satisfaction d'enfin comprendre ce que fait git rebase (et de pouvoir l'expliquer à votre petit frère)
+Using SSH:
 
-Accessoirement, le respect éternel de vos pairs
+```bash
+USE_SSH=true yarn deploy
+```
 
-⚠️ Attention : Ce workshop contient des révélations qui risquent de bouleverser votre vision de Git. 
+Not using SSH:
 
-Effets secondaires connus : addiction aux commits propres, refus catégorique de merger sans rebase, et tendance à évangéliser vos collègues sur git worktree.
+```bash
+GIT_USER=<Your GitHub username> yarn deploy
+```
 
-## Prérequis :
-
-Savoir ce qu'est un commit (si vous tapez encore git add . les yeux fermés en priant, c'est parfait, on est là pour ça).
+If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.

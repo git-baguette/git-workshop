@@ -1,0 +1,9 @@
+{
+  "label": "Module 3 — Bisect",
+  "position": 5,
+  "collapsible": false,
+  "link": {
+    "type": "doc",
+    "id": "bisect/overview"
+  }
+}
