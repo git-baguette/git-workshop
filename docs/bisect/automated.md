@@ -19,24 +19,22 @@ Git évalue la commande après chaque checkout :
 - **Exit code 1-127** → commit bad
 - **Exit code 125** → commit skippé (ne peut pas être testé)
 
-## Application au projet bisect-demo
+## Application au projet ng-baguette-conf
 
 ```bash
-cd ~/git-workshop
-# Recréez le bisect-demo du TP précédent si vous l'avez supprimé
-# Puis :
+cd ~/git-workshop/ng-baguette-conf
 
 git bisect start
 git bisect bad HEAD
 git bisect good $(git log --oneline | tail -1 | awk '{print $1}')
 
 # Lance le test automatiquement à chaque étape
-git bisect run node --input-type=module < sort.test.js
+git bisect run ./bisect-test.sh
 ```
 
 Git va :
 1. Checkout un commit
-2. Lancer `node --input-type=module < sort.test.js`
+2. Lancer `./bisect-test.sh`
 3. Lire le code de sortie
 4. Décider good/bad
 5. Répéter jusqu'au commit coupable
@@ -44,14 +42,45 @@ Git va :
 Résultat final sans aucune intervention :
 
 ```
-running node --input-type=module < sort.test.js
-Tests OK — sortByPriority fonctionne correctement
+running ./bisect-test.sh
+Bisecting: 7 revisions left to test (roughly 3 steps)
+running ./bisect-test.sh
 Bisecting: 3 revisions left to test (roughly 2 steps)
 ...
 <hash> is the first bad commit
+commit <hash>
+    refactor(schedule): optimize session sort for performance
 ```
 
-## Script de test dédié
+## Le script de test bisect-test.sh
+
+Le projet fournit un script dédié :
+
+```bash
+#!/bin/bash
+# Exit 0 = commit bon, Exit 1 = commit mauvais, Exit 125 = skip
+
+# Vérifier que le fichier schedule.ts existe (commits 1-11 ne l'ont pas encore)
+if [ ! -f "src/utils/schedule.ts" ]; then
+  exit 125
+fi
+
+# Tester le sens du tri dans getSortedSessions
+node --input-type=module << 'EOF'
+import { readFileSync } from "fs";
+const code = readFileSync("src/utils/schedule.ts", "utf8");
+const isCorrect = code.includes("new Date(a.start).getTime() - new Date(b.start).getTime()");
+process.exit(isCorrect ? 0 : 1);
+EOF
+```
+
+### Pourquoi exit 125 pour les commits 1-11 ?
+
+Les commits 1 à 11 n'ont pas encore créé `src/utils/schedule.ts` (il est ajouté au commit 12). Le script vérifie donc d'abord si le fichier existe, et si ce n'est pas le cas, retourne `125` pour que Git **skippe** ce commit au lieu de le marquer bad.
+
+Sans ce garde-fou, Git marquerait les commits 1-11 comme mauvais à tort, et bisect ne convergerait pas vers le bon commit.
+
+## Script de test dédié — bonne pratique
 
 Pour les projets réels, créez un script dédié au bisect :
 
@@ -64,7 +93,7 @@ set -e
 npm ci --silent 2>/dev/null || true
 
 # Lancer les tests ciblés
-npm test -- --testPathPattern="sort" --silent
+npm test -- --testPathPattern="schedule" --silent
 
 # Exit code automatique : 0=good, 1=bad
 EOF
@@ -95,7 +124,7 @@ if ! npm run build --silent 2>/dev/null; then
 fi
 
 # Maintenant tester
-npm test -- --testPathPattern="sort" --silent
+npm test -- --testPathPattern="schedule" --silent
 EOF
 ```
 

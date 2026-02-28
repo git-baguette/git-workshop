@@ -60,7 +60,7 @@ La feature est dans `main`, mais invisible tant que le flag est `false`. On acti
 | **Pair programming / code review async** | Le review se fait sur de petits commits, pas des PRs de 1000 lignes |
 | **Rollback facile** | `git revert` doit être réflexe |
 
-## Exemple avec TodoCraft
+## Exemple avec NG Baguette Conf
 
 ### Committer directement sur main (petits changements)
 

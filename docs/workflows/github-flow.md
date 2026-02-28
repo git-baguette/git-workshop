@@ -38,7 +38,7 @@ Deux branches actives à tout moment : `main` et votre feature en cours.
 
 C'est tout.
 
-## Exemple avec TodoCraft
+## Exemple avec NG Baguette Conf
 
 ### Nouvelle feature
 

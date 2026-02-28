@@ -64,8 +64,8 @@ nop678  feat(utils): add sortByPriority
 ## TP — Mettre à jour une feature branch avec rebase
 
 ```bash
-cd ~/git-workshop/todocraft
-git checkout feature/export-csv
+cd ~/git-workshop/ng-baguette-conf
+git checkout feature/speaker-search
 
 # Vérifier la divergence avec main
 git log --oneline feature/export-csv ^main

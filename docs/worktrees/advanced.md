@@ -10,20 +10,20 @@ Au lieu de cloner normalement, clonez en bare et utilisez uniquement des worktre
 
 ```bash
 # Cloner le repo en bare (pas de working tree)
-git clone --bare https://github.com/monorg/todocraft.git todocraft.git
-cd todocraft.git
+git clone --bare https://github.com/monorg/ng-baguette-conf.git ng-baguette-conf.git
+cd ng-baguette-conf.git
 
 # Créer des worktrees pour les branches dont vous avez besoin
-git worktree add ../todocraft-main main
-git worktree add ../todocraft-staging staging
-git worktree add ../todocraft-feature feature/dark-mode
+git worktree add ../ng-baguette-main main
+git worktree add ../ng-baguette-staging staging
+git worktree add ../ng-baguette-feature feature/dark-mode
 ```
 
 ```
-todocraft.git/          ← tous les objets (partagés, légers)
-todocraft-main/         ← working tree sur main
-todocraft-staging/      ← working tree sur staging
-todocraft-feature/      ← working tree sur feature/dark-mode
+ng-baguette-conf.git/   ← tous les objets (partagés, légers)
+ng-baguette-main/       ← working tree sur main
+ng-baguette-staging/    ← working tree sur staging
+ng-baguette-feature/    ← working tree sur feature/dark-mode
 ```
 
 **Avantages vs clone classique :**
@@ -38,7 +38,7 @@ todocraft-feature/      ← working tree sur feature/dark-mode
 
 ```bash
 git worktree add ../autre-dossier feature/dark-mode
-# fatal: 'feature/dark-mode' is already checked out at '../todocraft'
+# fatal: 'feature/dark-mode' is already checked out at '../ng-baguette-conf'
 ```
 
 C'est une protection intentionnelle — deux index sur la même branche créerait des conflits impossibles à résoudre.
@@ -79,7 +79,7 @@ Utilisation :
 
 ```bash
 wt feature/payments
-# Crée ../todocraft-feature-payments sur feature/payments
+# Crée ../ng-baguette-conf-feature-payments sur feature/payments
 ```
 
 ## Tests en parallèle sur plusieurs branches
@@ -106,14 +106,14 @@ Vos deux suites de tests tournent en parallèle pendant que vous continuez à tr
 ls .git/worktrees/
 
 # Pour chaque worktree lié :
-cat .git/worktrees/todocraft-hotfix/gitdir
-# /home/user/git-workshop/todocraft-hotfix/.git
+cat .git/worktrees/ng-baguette-hotfix/gitdir
+# /home/user/git-workshop/ng-baguette-hotfix/.git
 # (fichier dans le working tree qui pointe vers ici)
 
-cat .git/worktrees/todocraft-hotfix/HEAD
+cat .git/worktrees/ng-baguette-hotfix/HEAD
 # ref: refs/heads/fix/login-prod
 
-cat .git/worktrees/todocraft-hotfix/locked 2>/dev/null
+cat .git/worktrees/ng-baguette-hotfix/locked 2>/dev/null
 # Présent si le worktree est verrouillé (ex: sur un disque réseau)
 ```
 
@@ -123,6 +123,6 @@ cat .git/worktrees/todocraft-hotfix/locked 2>/dev/null
 
 ```bash
 git switch feature/dark-mode
-# fatal: 'feature/dark-mode' is already checked out at '../todocraft'
+# fatal: 'feature/dark-mode' is already checked out at '../ng-baguette-conf'
 # Protection automatique — pas de corruption possible
 ```

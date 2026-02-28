@@ -11,11 +11,11 @@ Le rebase interactif (`git rebase -i`) est l'outil le plus puissant pour **netto
 Quand vous lancez `git rebase -i`, Git ouvre un éditeur avec une liste de commits et des actions :
 
 ```
-pick a1b2c3 feat(theme): add theme system
-pick b2c3d4 fix typo in theme.js
-pick c3d4e5 feat(ui): add dark mode toggle
+pick a1b2c3 feat(nav): add responsive navigation
+pick b2c3d4 fix typo in Header.astro
+pick c3d4e5 feat(nav): add drawer for mobile
 pick d4e5f6 WIP: broken, dont merge
-pick e5f6a7 fix: actually make dark mode work
+pick e5f6a7 fix: actually make drawer close
 ```
 
 | Commande | Alias | Effet |
@@ -28,46 +28,52 @@ pick e5f6a7 fix: actually make dark mode work
 | `drop` | `d` | Supprimer le commit |
 | (réordonner les lignes) | | Réordonner les commits |
 
-## TP — Nettoyer l'historique de feature/dark-mode
+## TP — Nettoyer l'historique de feature/responsive-nav
 
 ### Situation de départ
 
-La branche `feature/dark-mode` ressemble à ça dans la vraie vie :
+La branche `feature/responsive-nav` ressemble à ça dans la vraie vie :
 
 ```bash
-cd ~/git-workshop/todocraft
-git checkout feature/dark-mode
+cd ~/git-workshop/ng-baguette-conf
+git checkout feature/responsive-nav
 
 # Simuler un historique de feature "honnête"
-git log --oneline feature/dark-mode ^main
+git log --oneline feature/responsive-nav ^main
 # e.g.:
-# a1b2c3 feat(ui): add dark mode toggle button component
+# a1b2c3 feat(nav): replace dropdown with drawer for mobile navigation
 ```
 
 Ajoutons l'historique réaliste d'une vraie session de travail :
 
 ```bash
 # La suite du travail en cours (commitée rapidement)
-cat >> src/ui/darkmode.js << 'EOF'
+cat >> src/components/Drawer.astro << 'EOF'
 
-export function preloadTheme() {
-  const theme = localStorage.getItem("todocraft-theme") ?? "light";
-  document.documentElement.dataset.theme = theme;
-}
+<script>
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const cb = document.getElementById('mobile-nav') as HTMLInputElement | null;
+      if (cb) cb.checked = false;
+    }
+  });
+</script>
 EOF
-git add . && git commit -m "preload theme"
+git add . && git commit -m "close on ESC"
 
-# Oops, typo dans le message précédent, et on oublie un fichier
-echo "/* dark mode transitions */" > src/ui/transitions.css
-git add . && git commit -m "add transitions css"
+# Oops, on oublie de gérer le focus
+cat >> src/components/Header.astro << 'EOF'
+<!-- focus trap à ajouter -->
+EOF
+git add . && git commit -m "add focus trap comment"
 
 # Fix d'un bug découvert en testant
-sed -i '' 's/dataset.theme/setAttribute("data-theme",/' src/ui/darkmode.js 2>/dev/null || \
-sed -i 's/dataset.theme/setAttribute("data-theme",/' src/ui/darkmode.js
+sed -i '' 's/<!-- focus trap à ajouter -->//' src/components/Header.astro 2>/dev/null || \
+sed -i 's/<!-- focus trap à ajouter -->//' src/components/Header.astro
 git add . && git commit -m "fix bug"
 
 # Encore un oubli
-echo "@keyframes theme-transition { from { opacity: 0.8; } to { opacity: 1; } }" >> src/ui/transitions.css
+echo "" >> src/components/Drawer.astro
 git add . && git commit -m "wip"
 
 # Finalisation
@@ -77,13 +83,13 @@ git commit --allow-empty -m "done I think"
 L'historique est maintenant honteux :
 
 ```bash
-git log --oneline feature/dark-mode ^main
+git log --oneline feature/responsive-nav ^main
 # 5f6a7b8 done I think
 # 4e5f6a7 wip
 # 3d4e5f6 fix bug
-# 2c3d4e5 add transitions css
-# 1b2c3d4 preload theme
-# a9b0c1d feat(ui): add dark mode toggle button component
+# 2c3d4e5 add focus trap comment
+# 1b2c3d4 close on ESC
+# a9b0c1d feat(nav): replace dropdown with drawer for mobile navigation
 ```
 
 ### Nettoyer avec rebase -i
@@ -96,9 +102,9 @@ git rebase -i main
 L'éditeur s'ouvre avec :
 
 ```
-pick a9b0c1d feat(ui): add dark mode toggle button component
-pick 1b2c3d4 preload theme
-pick 2c3d4e5 add transitions css
+pick a9b0c1d feat(nav): replace dropdown with drawer for mobile navigation
+pick 1b2c3d4 close on ESC
+pick 2c3d4e5 add focus trap comment
 pick 3d4e5f6 fix bug
 pick 4e5f6a7 wip
 pick 5f6a7b8 done I think
@@ -107,9 +113,9 @@ pick 5f6a7b8 done I think
 Modifiez-le pour obtenir :
 
 ```
-reword a9b0c1d feat(ui): add dark mode toggle button component
-fixup  1b2c3d4 preload theme
-pick   2c3d4e5 add transitions css
+reword a9b0c1d feat(nav): replace dropdown with drawer for mobile navigation
+fixup  1b2c3d4 close on ESC
+drop   2c3d4e5 add focus trap comment
 fixup  3d4e5f6 fix bug
 fixup  4e5f6a7 wip
 fixup  5f6a7b8 done I think
@@ -118,30 +124,23 @@ fixup  5f6a7b8 done I think
 Sauvegardez et quittez. Git vous demandera de reword le premier commit :
 
 ```
-feat(ui): add dark mode toggle button component
+feat(nav): replace dropdown with drawer for mobile navigation
 ```
 
 Corrigez en :
 
 ```
-feat(ui): add dark mode toggle with theme persistence
-```
-
-Et renommez le commit de `add transitions css` :
-
-```
-feat(ui): add smooth theme transition animation
+feat(nav): replace dropdown with accessible drawer (mobile)
 ```
 
 ### Résultat final
 
 ```bash
-git log --oneline feature/dark-mode ^main
-# b2c3d4e feat(ui): add smooth theme transition animation
-# a9b0c1d feat(ui): add dark mode toggle with theme persistence
+git log --oneline feature/responsive-nav ^main
+# a9b0c1d feat(nav): replace dropdown with accessible drawer (mobile)
 ```
 
-Six commits douteux → deux commits propres qui racontent une histoire claire.
+Six commits douteux → un seul commit propre qui raconte une histoire claire.
 
 ## TP — Squash de commits WIP
 
@@ -161,8 +160,8 @@ git rebase -i HEAD~3
 Mettez tous sauf le premier en `fixup` :
 
 ```
-pick   abc123 feat(cache): add memoize utility with TTL
-fixup  def456 chore: update dependencies
+pick   abc123 feat: add social links (Bluesky, Twitter, LinkedIn)
+fixup  def456 fix: correct LinkedIn URL
 fixup  ghi789 chore: release v1.0.0
 ```
 
@@ -198,16 +197,16 @@ git rebase -i HEAD~4
 
 ```
 # Avant :
-pick a feat(ui): add export button
-pick b feat(auth): add OAuth
-pick c fix(ui): fix export button color
-pick d test(auth): add OAuth tests
+pick a feat: add Speaker component
+pick b feat: add CFP page
+pick c fix: fix Speaker avatar size
+pick d test: add schedule tests
 
 # Après (réordonner + squash) :
-pick a feat(ui): add export button
-fixup c fix(ui): fix export button color
-pick b feat(auth): add OAuth
-fixup d test(auth): add OAuth tests
+pick a feat: add Speaker component
+fixup c fix: fix Speaker avatar size
+pick b feat: add CFP page
+drop  d test: add schedule tests
 ```
 
 ## `--autosquash` : le raccourci magique
@@ -216,10 +215,10 @@ Si vous commitez avec le préfixe `fixup!` ou `squash!` suivi du message de la c
 
 ```bash
 # Commit normal
-git commit -m "feat(cache): add memoize utility"
+git commit -m "feat: add Agenda component"
 
 # Plus tard, fix à fusionner avec ce commit
-git commit -m "fixup! feat(cache): add memoize utility"
+git commit -m "fixup! feat: add Agenda component"
 
 # Rebase avec autosquash
 git rebase -i --autosquash main
@@ -239,10 +238,10 @@ Pour modifier uniquement le dernier commit (avant de pusher) :
 
 ```bash
 # Modifier le message du dernier commit
-git commit --amend -m "feat(ui): correct message"
+git commit --amend -m "feat(nav): correct message"
 
 # Ajouter un fichier oublié au dernier commit
-git add fichier-oublie.js
+git add fichier-oublie.astro
 git commit --amend --no-edit  # garde le même message
 ```
 

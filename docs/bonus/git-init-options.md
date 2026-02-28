@@ -10,13 +10,13 @@ Un **dépôt bare** contient uniquement les internals Git (contenu du `.git/`) s
 
 ```bash
 # Créer un dépôt bare (suffixe .git par convention)
-git init --bare ~/serveur/todocraft.git
+git init --bare ~/serveur/ng-baguette-conf.git
 
 # Cloner depuis le bare
-git clone ~/serveur/todocraft.git ~/todocraft-dev
+git clone ~/serveur/ng-baguette-conf.git ~/ng-baguette-dev
 
 # Push vers le bare
-cd ~/todocraft-dev
+cd ~/ng-baguette-dev
 git push origin main
 ```
 
@@ -83,10 +83,10 @@ git config --global init.defaultBranch main
 
 ```bash
 # Plusieurs développeurs Unix peuvent pousser vers ce bare repo
-git init --bare --shared=group /srv/git/todocraft.git
+git init --bare --shared=group /srv/git/ng-baguette-conf.git
 
 # Vérifier les permissions
-ls -la /srv/git/todocraft.git
+ls -la /srv/git/ng-baguette-conf.git
 # drwxrwsr-x (sticky bit de groupe)
 ```
 

@@ -2,19 +2,21 @@
 sidebar_position: 2
 ---
 
-# TP — Débusquer le bug de tri dans TodoCraft
+# TP — Débusquer le bug de tri dans NG Baguette Conf
 
 :::info Prérequis
-Avoir exécuté le [script de setup](/docs/setup). Le bug est planté dans le projet TodoCraft.
+Avoir exécuté le [script de setup](/docs/setup). Le bug est planté dans le projet ng-baguette-conf.
 :::
 
 ## Vérifier la présence du bug
 
 ```bash
-cd ~/git-workshop/todocraft
-node tests/sort.test.js
-# AssertionError: FAIL [0]: attendu high, obtenu low
+cd ~/git-workshop/ng-baguette-conf
+./bisect-test.sh; echo "Exit: $?"
+# Exit: 1  ← le bug est là
 ```
+
+Le symptôme visible : l'agenda affiche les sessions en ordre **anti-chronologique** (la dernière session de la journée apparaît en premier).
 
 Vous savez :
 - **Maintenant** (`HEAD`) : le bug est là
@@ -39,29 +41,30 @@ git bisect good $FIRST
 Git vous répond :
 
 ```
-Bisecting: 23 revisions left to test after this (roughly 5 steps)
+Bisecting: 14 revisions left to test after this (roughly 4 steps)
 [<hash>] <message du commit au milieu>
 ```
 
 Git vous a checkout un commit au milieu. Testez-le :
 
 ```bash
-node tests/sort.test.js
+./bisect-test.sh; echo "Exit: $?"
 ```
 
 Selon le résultat :
-- **Tests OK** → `git bisect good`
-- **Tests KO** → `git bisect bad`
+- **Exit: 0** → `git bisect good`
+- **Exit: 1** → `git bisect bad`
+- **Exit: 125** → `git bisect skip` (fichier pas encore créé dans les premiers commits)
 
 Répétez 4-5 fois jusqu'à ce que Git annonce :
 
 ```
 <hash> is the first bad commit
 commit <hash>
-Author: TodoCraft Dev <workshop@todocraft.io>
+Author: NG Baguette Dev <workshop@ngbaguette.dev>
 Date:   ...
 
-    refactor(sort): update priority constants for new design system
+    refactor(schedule): optimize session sort for performance
 ```
 
 **Vous avez trouvé le coupable.**
@@ -73,17 +76,17 @@ Date:   ...
 git show $(git bisect log | grep "# bad" | tail -1 | awk '{print $3}')
 
 # Ou pendant la session
-git diff HEAD^ HEAD -- src/utils/sort.js
+git diff HEAD^ HEAD -- src/utils/schedule.ts
 ```
 
 Vous verrez :
 
 ```diff
--const PRIORITY_ORDER = { high: 0, medium: 1, low: 2 };
-+const PRIORITY_ORDER = { high: 2, medium: 1, low: 0 };
+-    (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
++    (a, b) => new Date(b.start).getTime() - new Date(a.start).getTime()
 ```
 
-Voilà le bug : les valeurs ont été inversées.
+Voilà le bug : l'ordre des opérandes `a` et `b` a été inversé dans le comparateur.
 
 ### Terminer la session
 
@@ -94,16 +97,16 @@ git bisect reset
 
 ## Partie 2 — Bisect automatique (20 min)
 
-Le projet TodoCraft a un script de test prêt à l'emploi : `bisect-test.sh`.
+Le projet dispose d'un script de test prêt à l'emploi : `bisect-test.sh`.
 
 ```bash
 cat bisect-test.sh
 ```
 
-Il détecte le bug en inspectant le fichier `sort.js` :
-- Exit 0 → commit bon (`high: 0`)
-- Exit 1 → commit mauvais (`high: 2`)
-- Exit 125 → commit à skipper (fichier pas encore créé)
+Il détecte le bug en inspectant le fichier `schedule.ts` :
+- Exit 0 → commit bon (`a.start - b.start` = ordre chronologique)
+- Exit 1 → commit mauvais (`b.start - a.start` = ordre inversé)
+- Exit 125 → commit à skipper (fichier pas encore créé dans les commits 1-11)
 
 ### Lancer le bisect automatisé
 
@@ -123,7 +126,6 @@ running ./bisect-test.sh
 running ./bisect-test.sh
 running ./bisect-test.sh
 running ./bisect-test.sh
-running ./bisect-test.sh
 <hash> is the first bad commit
 ```
 
@@ -133,7 +135,7 @@ git bisect reset
 
 ### Comparer les durées
 
-- **Manuel** : 5-6 questions, ~5 min de TP
+- **Manuel** : 4-5 questions, ~5 min de TP
 - **Automatique** : 0 question, ~3 secondes
 
 ## Partie 3 — Corriger et nettoyer (5 min)
@@ -141,33 +143,18 @@ git bisect reset
 Maintenant que vous savez quel commit a introduit le bug, corrigez-le :
 
 ```bash
-# Option 1 : corriger sur main directement (GitHub Flow)
-cat > src/utils/sort.js << 'EOF'
-// Ordre correct : 0 = plus urgent
-const PRIORITY_ORDER = { high: 0, medium: 1, low: 2 };
+# Ouvrir src/utils/schedule.ts et corriger getSortedSessions
+# Remplacer :
+#   (a, b) => new Date(b.start).getTime() - new Date(a.start).getTime()
+# Par :
+#   (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
 
-export function sortByPriority(tasks) {
-  return [...tasks].sort(
-    (a, b) => PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority]
-  );
-}
-
-export function filterDone(tasks) {
-  return tasks.filter(t => !t.done);
-}
-
-export function sortByDate(tasks) {
-  return [...tasks].sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
-}
-EOF
-
-git add . && git commit -m "fix(sort): restore correct priority order (high: 0)"
+git add src/utils/schedule.ts
+git commit -m "fix(schedule): restore correct chronological sort order in getSortedSessions"
 
 # Vérifier
-node tests/sort.test.js
-# ✅ Tests OK — sortByPriority fonctionne correctement
+./bisect-test.sh; echo "Exit: $?"
+# Exit: 0  ← bug corrigé
 ```
 
 ## Commandes utiles pendant une session bisect
@@ -193,19 +180,19 @@ git bisect replay session-bisect.log
 
 ## 🏆 Challenge — Bisect sur votre propre historique
 
-Imaginez que le bug soit différent : la function `filterDone` retourne les tâches **terminées** au lieu des **non-terminées**.
+Introduisez un second bug : `getAllSpeakers()` retourne une liste vide.
 
-1. Modifiez `filterDone` pour introduire ce bug dans un nouveau commit
-2. Ajoutez un test qui détecte ce bug dans `tests/sort.test.js`
-3. Utilisez `git bisect run` avec le test pour retrouver le commit coupable
+1. Modifiez `getAllSpeakers` pour retourner `[]`
+2. Committez avec un message trompeur
+3. Écrivez un script de test qui détecte ce bug
+4. Utilisez `git bisect run` pour retrouver le commit coupable
 
 ```bash
-# Hint : votre script de test doit tester filterDone
+# Hint : votre script de test doit vérifier que getAllSpeakers retourne des données
 node --input-type=module << 'EOF'
-import { filterDone } from "./src/utils/sort.js";
-const tasks = [{ done: true }, { done: false }];
-const result = filterDone(tasks);
-// filterDone doit retourner uniquement les non-terminées
-process.exit(result.length === 1 && !result[0].done ? 0 : 1);
+import { readFileSync } from "fs";
+const code = readFileSync("src/utils/schedule.ts", "utf8");
+const isCorrect = !code.includes("return []");
+process.exit(isCorrect ? 0 : 1);
 EOF
 ```

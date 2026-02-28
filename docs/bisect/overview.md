@@ -15,25 +15,25 @@ sidebar_position: 1
 Un bug est en prod. Vous regardez votre historique :
 
 ```bash
-cd ~/git-workshop/todocraft
+cd ~/git-workshop/ng-baguette-conf
 git log --oneline | wc -l
-# 49 commits
+# 32 commits
 
 git log --oneline
 # a1b2c3d (HEAD) chore: add bisect test script
 # b2c3d4e chore: release v1.0.0
-# c3d4e5f feat(filter): add composable multi-filter utility
-# d4e5f6a feat(validation): add task input validation
-# ...47 commits plus tôt...
+# c3d4e5f feat(ui): add speaker cards grid layout
+# d4e5f6a feat(schedule): add session filtering by track
+# ...28 commits plus tôt...
 ```
 
-Les tâches "haute priorité" s'affichent en dernier au lieu d'en premier. Quelqu'un a cassé `sortByPriority`. Lequel de ces 49 commits est le coupable ?
+Les sessions de l'agenda s'affichent en ordre anti-chronologique. Quelqu'un a cassé `getSortedSessions`. Lequel de ces 32 commits est le coupable ?
 
 Vérifiez :
 
 ```bash
-node tests/sort.test.js
-# AssertionError: FAIL [0]: attendu high, obtenu low
+./bisect-test.sh; echo "Exit: $?"
+# Exit: 1  ← le bug est là
 ```
 
 ## La recherche binaire appliquée à Git
@@ -41,20 +41,20 @@ node tests/sort.test.js
 `git bisect` utilise une **recherche dichotomique** sur votre historique :
 
 ```
-49 commits à tester → log₂(49) ≈ 5.6 → 6 étapes maximum
+32 commits à tester → log₂(32) = 5 → 5 étapes maximum
 ```
 
 ```
-[1 ─────────────── 25 ─────────────── 49]
+[1 ─────────────── 16 ─────────────── 32]
                    ↑ bad
-[1 ──────── 13 ─── 25]
+[1 ──────── 8 ──── 16]
             ↑ good
-[13 ─── 19 ─── 25]
+[8 ──── 12 ─── 16]
         ↑ bad
-[13 ─── 16 ─── 19]
+[8 ──── 10 ─── 12]
         ↑ good
-[16 ─ 17 ─ 19]
-      ↑ bad → commit 17 est le premier mauvais !
+[10 ─ 11 ─ 12]
+      ↑ bad → commit 11 est le premier mauvais !
 ```
 
 ## Les commandes

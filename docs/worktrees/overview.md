@@ -31,10 +31,10 @@ Un **worktree** est un répertoire de travail supplémentaire lié à votre dép
 Pas de duplication. Pas de re-téléchargement. Pas de `node_modules` à réinstaller.
 
 ```
-~/git-workshop/todocraft/.git/   ← tous les objets Git (partagés)
-~/git-workshop/todocraft/         ← worktree principal (feature/dark-mode)
-~/git-workshop/todocraft-hotfix/  ← worktree lié    (fix/login-prod)
-~/git-workshop/todocraft-export/  ← worktree lié    (feature/export-csv)
+~/git-workshop/ng-baguette-conf/.git/   ← tous les objets Git (partagés)
+~/git-workshop/ng-baguette-conf/         ← worktree principal (feature/dark-mode)
+~/git-workshop/ng-baguette-hotfix/       ← worktree lié    (fix/login-prod)
+~/git-workshop/ng-baguette-export/       ← worktree lié    (feature/export-csv)
 ```
 
 Trois branches, trois terminaux, zéro stash.

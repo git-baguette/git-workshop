@@ -55,7 +55,7 @@ cat > config.js << 'EOF'
 module.exports = {
   timeout: 30,
   retries: 3,
-  endpoint: "https://api.todocraft.io",
+  endpoint: "https://api.ngbaguette.dev",
 };
 EOF
 git add . && git commit -m "feat: initial config"
@@ -94,7 +94,7 @@ cat > config.js << 'EOF'
 module.exports = {
   timeout: 45,
   retries: 3,
-  endpoint: "https://api.todocraft.io",
+  endpoint: "https://api.ngbaguette.dev",
 };
 EOF
 

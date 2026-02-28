@@ -5,7 +5,7 @@ sidebar_position: 2
 # TP — Ressusciter des commits perdus
 
 :::info Prérequis
-Avoir exécuté le [script de setup](/docs/setup). Le projet TodoCraft contient une branche `feature/auth-v2` **supprimée** à retrouver.
+Avoir exécuté le [script de setup](/docs/setup). Le projet ng-baguette-conf contient une branche `feature/cfp-form` **supprimée** à retrouver.
 :::
 
 ## Scénario 1 — Le `reset --hard` catastrophique (15 min)
@@ -15,7 +15,7 @@ Avoir exécuté le [script de setup](/docs/setup). Le projet TodoCraft contient 
 Vous venez de finir 3 commits importants. En voulant "nettoyer", vous faites un `reset --hard` d'une de trop.
 
 ```bash
-cd ~/git-workshop/todocraft
+cd ~/git-workshop/ng-baguette-conf
 git checkout main
 
 # Voir les derniers commits
@@ -41,7 +41,7 @@ Vous verrez :
 ```
 abc1234 HEAD@{0}: reset: moving to HEAD~5
 def5678 HEAD@{1}: commit: chore: release v1.0.0      ← votre dernier "bon" commit
-ghi9012 HEAD@{2}: commit: feat(filter): add composable multi-filter
+ghi9012 HEAD@{2}: commit: feat: add social links
 ...
 ```
 
@@ -71,16 +71,16 @@ Ou configurez votre terminal pour afficher le hash dans le prompt.
 
 ### La situation
 
-Le script de setup a créé `feature/auth-v2` et l'a supprimée pour simuler l'accident. Votre mission : la retrouver.
+Le script de setup a créé `feature/cfp-form` et l'a supprimée pour simuler l'accident. Votre mission : la retrouver.
 
 ```bash
 # Vérifier que la branche n'existe plus
-git branch | grep auth-v2
+git branch | grep cfp-form
 # (rien)
 
 # Mais elle était là !
-git reflog | grep auth-v2
-# HEAD@{N}: commit: feat(auth): add OAuth2 GitHub login flow
+git reflog | grep cfp-form
+# HEAD@{N}: commit: feat(cfp): add CFP submission form
 # (ou similaire)
 ```
 
@@ -88,21 +88,21 @@ git reflog | grep auth-v2
 
 ```bash
 # Chercher le moment où vous étiez sur cette branche
-git reflog | grep -E "(auth-v2|OAuth)"
-# HEAD@{5}: checkout: moving from feature/auth-v2 to main
-# HEAD@{6}: commit: feat(auth): add OAuth2 GitHub login flow  ← dernier commit de la branche
+git reflog | grep -E "(cfp-form|cfp)"
+# HEAD@{5}: checkout: moving from feature/cfp-form to main
+# HEAD@{6}: commit: feat(cfp): add CFP submission form  ← dernier commit de la branche
 ```
 
 Notez le hash du dernier commit **sur** la branche (avant le checkout vers main).
 
 ```bash
 # Recréer la branche à partir de ce commit (ajustez le numéro selon votre reflog)
-git checkout -b feature/auth-v2 HEAD@{6}
+git checkout -b feature/cfp-form HEAD@{6}
 # OU avec le hash directement (plus fiable)
-git checkout -b feature/auth-v2 <hash>
+git checkout -b feature/cfp-form <hash>
 
 git log --oneline -3
-# feat(auth): add OAuth2 GitHub login flow  ← récupéré !
+# feat(cfp): add CFP submission form  ← récupéré !
 ```
 
 ### Méthode 2 : `git fsck` pour trouver les commits orphelins
@@ -116,27 +116,27 @@ git fsck --lost-found
 # Inspecter les commits orphelins
 git show abc1234 --stat
 # S'il s'agit de votre commit, récupérez-le
-git checkout -b feature/auth-v2 abc1234
+git checkout -b feature/cfp-form abc1234
 ```
 
 ### Vérification
 
 ```bash
-git log --oneline feature/auth-v2 ^main
-# feat(auth): add OAuth2 GitHub login flow
+git log --oneline feature/cfp-form ^main
+# feat(cfp): add CFP submission form
 
-cat src/auth/oauth.js
-# export function initiateOAuth...  ← le code est là !
+cat src/pages/fr/cfp.astro
+# <form ... action="/api/cfp">  ← le formulaire est là !
 ```
 
 ## Scénario 3 — Le rebase catastrophique (10 min)
 
 ### La situation
 
-Vous rebaser `feature/export-csv` sur main. Quelque chose se passe mal. Vous vous retrouvez dans un état incompréhensible.
+Vous rebasez `feature/speaker-search` sur main. Quelque chose se passe mal. Vous vous retrouvez dans un état incompréhensible.
 
 ```bash
-git checkout feature/export-csv
+git checkout feature/speaker-search
 
 # Simuler un rebase qui déraille
 git rebase main
@@ -156,10 +156,10 @@ git rebase --abort
 
 # Option 2 : si vous avez déjà fini mais que le résultat est mauvais
 git reflog
-# HEAD@{0}: rebase (finish): returning to refs/heads/feature/export-csv
-# HEAD@{1}: rebase (pick): feat(ui): add ExportMenu with format selection
+# HEAD@{0}: rebase (finish): returning to refs/heads/feature/speaker-search
+# HEAD@{1}: rebase (pick): feat: add SpeakerSearch component with live filtering
 # HEAD@{2}: rebase (start): checkout main
-# HEAD@{3}: commit: feat(ui): add ExportMenu with format selection   ← état avant rebase
+# HEAD@{3}: commit: feat: add SpeakerSearch component  ← état avant rebase
 
 # Revenir à l'état avant le rebase
 git reset --hard HEAD@{3}

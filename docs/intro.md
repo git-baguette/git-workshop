@@ -21,11 +21,11 @@ Ce workshop est fait pour vous.
 | 02:25   | 15 min | **Module 5** — Workflows : Gitflow, GitHub Flow, Trunk-Based |
 | 02:40   | 20 min | Wrap-up, questions & challenges à faire chez soi             |
 
-## Le projet fil rouge : TodoCraft
+## Le projet fil rouge : NG Baguette Conf
 
-Tout au long du workshop, vous travaillerez sur **TodoCraft** — une application de gestion de tâches avec :
+Tout au long du workshop, vous travaillerez sur **NG Baguette Conf** — un site de conférence Astro + Tailwind avec :
 
-- **47 commits** d'historique réaliste avec un bug caché quelque part
+- **~32 commits** d'historique réaliste avec un bug caché quelque part
 - **3 branches** en cours de développement simultané
 - Des commits "perdus" à retrouver avec le reflog
 - Un historique à nettoyer avec rebase
