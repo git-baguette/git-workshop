@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 4
 ---
 
 # Rerere — Ne résolvez jamais deux fois le même conflit
