@@ -73,7 +73,7 @@ Date:   ...
 
 ```bash
 # Voir le diff du commit
-git show $(git bisect log | grep "# bad" | tail -1 | awk '{print $3}')
+git show $(git bisect log | grep "# bad" | tail -1 | awk '{print $3}' | tr -d '[]')
 
 # Ou pendant la session
 git diff HEAD^ HEAD -- src/utils/schedule.ts
