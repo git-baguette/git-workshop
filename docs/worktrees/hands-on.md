@@ -27,7 +27,6 @@ git branch
 git log --oneline feature/responsive-nav ^main
 # feat(nav): replace dropdown with drawer for mobile navigation
 
-# Il y a aussi des modifications non committées (travail en cours)
 git stash list
 # (rien — les modifs sont dans le working tree de la branche)
 ```
@@ -109,15 +108,27 @@ Maintenant que le hotfix est en prod, vous reprenez vos features. Créez un work
 
 ```bash
 git worktree add ../ng-baguette-search feature/speaker-search
+git worktree add ../ng-baguette-nav feature/responsive-nav
 ```
 
 **Terminal 1** — Continuer `feature/responsive-nav` :
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
-git checkout feature/responsive-nav
+cd ~/git-workshop/ng-baguette-nav
 
-# Finir le script de fermeture par Escape (déjà dans src/components/Drawer.astro)
+# Ajouter le listener ESC à la fin de Drawer.astro
+cat >> src/components/Drawer.astro << 'EOF'
+
+<script>
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      const drawer = document.getElementById("my-drawer") as HTMLInputElement | null;
+      if (drawer) drawer.checked = false;
+    }
+  });
+</script>
+EOF
+
 git add src/components/Drawer.astro
 git commit -m "feat(nav): add ESC key to close mobile drawer"
 ```
@@ -146,6 +157,7 @@ Vérifier l'état global depuis n'importe quel worktree :
 ```bash
 git worktree list
 # ~/git-workshop/ng-baguette-conf          <hash> [main]
+# ~/git-workshop/ng-baguette-nav           <hash> [feature/responsive-nav]
 # ~/git-workshop/ng-baguette-search        <hash> [feature/speaker-search]
 
 # Voir les branches dans leur état respectif
@@ -157,18 +169,18 @@ git log --oneline feature/speaker-search ^main
 
 ```bash
 cd ~/git-workshop/ng-baguette-conf
-git checkout main
+git switch main
 
 # Merger responsive-nav
 git merge feature/responsive-nav --no-ff -m "merge: feature/responsive-nav"
-git branch -d feature/responsive-nav
+git branch -D feature/responsive-nav
 
 # Nettoyer le worktree search
-git worktree remove ../ng-baguette-search 2>/dev/null || true
+git worktree remove ../ng-baguette-search
 
 # Merger speaker-search
 git merge feature/speaker-search --no-ff -m "merge: feature/speaker-search"
-git branch -d feature/speaker-search
+git branch -D feature/speaker-search
 
 # Nettoyage
 git worktree prune
@@ -181,19 +193,19 @@ git worktree list
 Testez la protection de Git :
 
 ```bash
-git checkout -b test-branch
+git switch -C test-branch
 git worktree add ../test-wt main
 
 # Essayer d'accéder à test-branch depuis le second worktree
 cd ../test-wt
-git checkout test-branch
-# fatal: 'test-branch' is already checked out at '~/git-workshop/ng-baguette-conf'
+git switch test-branch
+# fatal: 'test-branch' is already used by worktree at '~/git-workshop/ng-baguette-conf'
 
 # Nettoyage
 cd ~/git-workshop/ng-baguette-conf
 git worktree remove ../test-wt
+git switch main
 git branch -d test-branch
-git checkout main
 ```
 
 ## Récapitulatif des commandes
@@ -214,21 +226,22 @@ Pour les plus rapides : refaites l'exercice avec le setup **bare repo + worktree
 
 ```bash
 cd ~/git-workshop
+mkdir bare
+cd bare
 
 # Cloner le ng-baguette-conf existant en bare
-git clone --bare ng-baguette-conf ng-baguette-bare.git
-cd ng-baguette-bare.git
+git clone --bare https://github.com/yatho/git-workshop-starter.git .git
 
 # Créer les worktrees depuis le bare
-git worktree add ../nb-main main
-git worktree add ../nb-feature feature/responsive-nav 2>/dev/null || echo "branche déjà mergée"
+git worktree add ./nb-main main
+git worktree add ./nb-feature feature/responsive-nav 2>/dev/null || echo "branche déjà mergée"
 
 # Comparer la structure
-ls -la ../nb-main/
-# Pas de .git/ mais un fichier .git qui pointe vers ng-baguette-bare.git
+ls -la ./nb-main/
+# Pas de .git/ mais un fichier .git qui pointe vers ~/git-workshop/bare/.git
 
-cat ../nb-main/.git
-# gitdir: /home/user/git-workshop/ng-baguette-bare.git/worktrees/nb-main
+cat ./nb-main/.git
+# gitdir: /home/user/git-workshop/bare/.git/worktrees/nb-main
 ```
 
-**Question :** quelle est la différence entre `~/git-workshop/ng-baguette-conf/.git/` et `~/git-workshop/ng-baguette-bare.git/` ?
+**Question :** quelle est la différence entre `~/git-workshop/ng-baguette-conf/.git/` et `~/git-workshop/bare/.git/` ?

@@ -10,7 +10,7 @@ Au lieu de cloner normalement, clonez en bare et utilisez uniquement des worktre
 
 ```bash
 # Cloner le repo en bare (pas de working tree)
-git clone --bare https://github.com/monorg/ng-baguette-conf.git ng-baguette-conf.git
+git clone --bare https://github.com/yatho/git-workshop-starter.git ng-baguette-conf.git
 cd ng-baguette-conf.git
 
 # Créer des worktrees pour les branches dont vous avez besoin
@@ -27,6 +27,7 @@ ng-baguette-feature/    ← working tree sur feature/dark-mode
 ```
 
 **Avantages vs clone classique :**
+
 - Un seul `.git/objects` partagé — économie de disque
 - `git fetch` une seule fois, disponible partout
 - Impossible d'être "sur la mauvaise branche" par accident
@@ -38,49 +39,19 @@ ng-baguette-feature/    ← working tree sur feature/dark-mode
 
 ```bash
 git worktree add ../autre-dossier feature/dark-mode
-# fatal: 'feature/dark-mode' is already checked out at '../ng-baguette-conf'
+# fatal: 'feature/dark-mode' is already used by worktree at '../ng-baguette-conf'
 ```
 
 C'est une protection intentionnelle — deux index sur la même branche créerait des conflits impossibles à résoudre.
 :::
 
-| Contrainte | Comportement |
-|-----------|-------------|
-| Même branche dans deux worktrees | Interdit (erreur claire) |
-| Submodules | Non initialisés automatiquement dans les nouveaux worktrees |
-| Hooks | Partagés (définis dans `.git/hooks`, s'appliquent à tous) |
-| Sparse checkout | Indépendant par worktree |
-| `git stash` | Partagé entre tous les worktrees |
-
-## Alias pratique
-
-Ajoutez ceci dans votre `.zshrc` / `.bashrc` :
-
-```bash
-# wt <branche> — ouvre une branche dans un nouveau worktree
-wt() {
-  local branch="${1:?Branche requise}"
-  local root
-  root=$(git rev-parse --show-toplevel 2>/dev/null) || { echo "Pas un repo Git"; return 1; }
-  local name
-  name=$(basename "$root")
-  local dest="${root}/../${name}-${branch//\//-}"
-
-  if git worktree list | grep -q "$dest"; then
-    echo "Le worktree existe déjà : $dest"
-    return 1
-  fi
-
-  git worktree add "$dest" "$branch" && echo "Worktree créé : $dest"
-}
-```
-
-Utilisation :
-
-```bash
-wt feature/payments
-# Crée ../ng-baguette-conf-feature-payments sur feature/payments
-```
+| Contrainte                       | Comportement                                                |
+| -------------------------------- | ----------------------------------------------------------- |
+| Même branche dans deux worktrees | Interdit (erreur claire)                                    |
+| Submodules                       | Non initialisés automatiquement dans les nouveaux worktrees |
+| Hooks                            | Partagés (définis dans `.git/hooks`, s'appliquent à tous)   |
+| Sparse checkout                  | Indépendant par worktree                                    |
+| `git stash`                      | Partagé entre tous les worktrees                            |
 
 ## Tests en parallèle sur plusieurs branches
 
@@ -107,7 +78,7 @@ ls .git/worktrees/
 
 # Pour chaque worktree lié :
 cat .git/worktrees/ng-baguette-hotfix/gitdir
-# /home/user/git-workshop/ng-baguette-hotfix/.git
+# ~/git-workshop/ng-baguette-hotfix/.git
 # (fichier dans le working tree qui pointe vers ici)
 
 cat .git/worktrees/ng-baguette-hotfix/HEAD
@@ -115,14 +86,4 @@ cat .git/worktrees/ng-baguette-hotfix/HEAD
 
 cat .git/worktrees/ng-baguette-hotfix/locked 2>/dev/null
 # Présent si le worktree est verrouillé (ex: sur un disque réseau)
-```
-
-## `git switch` et worktrees (Git 2.23+)
-
-`git switch` est le remplaçant moderne de `git checkout` pour changer de branche. Il respecte aussi les worktrees :
-
-```bash
-git switch feature/dark-mode
-# fatal: 'feature/dark-mode' is already checked out at '../ng-baguette-conf'
-# Protection automatique — pas de corruption possible
 ```

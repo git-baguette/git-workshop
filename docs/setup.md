@@ -20,8 +20,10 @@ Faites ceci avant tout autre module. Tous les TPs s'appuient sur ce projet.
 
 ```bash
 mkdir -p ~/git-workshop && cd ~/git-workshop
-git clone <url-du-repo> ng-baguette-conf
+git clone https://github.com/yatho/git-workshop-starter.git ng-baguette-conf
 cd ng-baguette-conf
+git fetch origin feature/responsive-nav:feature/responsive-nav
+git fetch origin feature/speaker-search:feature/speaker-search
 ```
 
 ## Vérifier le setup
@@ -54,11 +56,11 @@ Le script tourne en moins de 30 secondes et crée exactement le même historique
 
 ## Aide-mémoire du projet
 
-| Élément                        | Emplacement                 | Rôle dans le workshop |
-| ------------------------------ | --------------------------- | --------------------- |
-| `src/utils/schedule.ts`        | Fichier avec le bug         | Module Bisect         |
-| `bisect-test.sh`               | Script bisect automatisé    | Module Bisect         |
-| `feature/responsive-nav`       | Branche en cours (WIP)      | Module Worktrees      |
-| `feature/speaker-search`       | Branche complète            | Module Worktrees      |
-| `feature/cfp-form`             | **Supprimée** — à retrouver | Module Reflog         |
-| Commit 21                      | Bug dans `getSortedSessions`| Module Bisect         |
+| Élément                  | Emplacement                  | Rôle dans le workshop |
+| ------------------------ | ---------------------------- | --------------------- |
+| `src/utils/schedule.ts`  | Fichier avec le bug          | Module Bisect         |
+| `bisect-test.sh`         | Script bisect automatisé     | Module Bisect         |
+| `feature/responsive-nav` | Branche en cours (WIP)       | Module Worktrees      |
+| `feature/speaker-search` | Branche complète             | Module Worktrees      |
+| `feature/cfp-form`       | **Supprimée** — à retrouver  | Module Reflog         |
+| Commit 21                | Bug dans `getSortedSessions` | Module Bisect         |
