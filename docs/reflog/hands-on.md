@@ -10,25 +10,44 @@ Avoir exécuté le [script de setup](/docs/setup). Le projet ng-baguette-conf co
 
 ## Scénario 1 — Le `reset --hard` catastrophique (15 min)
 
+### Préparation
+
+:::note Point de départ commun
+Ces commandes créent 3 commits sur main pour simuler "un travail récent à ne pas perdre". Exécutez-les même si vous avez déjà fait les exercices précédents — elles sont idempotentes.
+:::
+
+```bash
+cd ~/git-workshop/ng-baguette-conf
+git switch main
+
+# Créer 3 commits qui vont "disparaître"
+echo "sponsor-gold: Vercel" >> src/data/sponsors.json 2>/dev/null || echo "Vercel" >> sponsors.txt
+git add -A && git commit -m "feat(sponsors): add Vercel as gold sponsor"
+
+echo "sponsor-silver: Netlify" >> src/data/sponsors.json 2>/dev/null || echo "Netlify" >> sponsors.txt
+git add -A && git commit -m "feat(sponsors): add Netlify as silver sponsor"
+
+echo "sponsor-silver: Clever Cloud" >> src/data/sponsors.json 2>/dev/null || echo "Clever Cloud" >> sponsors.txt
+git add -A && git commit -m "feat(sponsors): add Clever Cloud as silver sponsor"
+
+git log --oneline -5
+# Vous devriez voir vos 3 nouveaux commits en tête de liste
+```
+
 ### La situation
 
 Vous venez de finir 3 commits importants. En voulant "nettoyer", vous faites un `reset --hard` d'une de trop.
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
-git checkout main
-
-# Voir les derniers commits
-git log --oneline -5
-# Notez les hashes — ils vont "disparaître"
+# Notez le hash du dernier commit avant l'accident
 LAST=$(git rev-parse HEAD)
 echo "Dernier commit : $LAST"
 
-# L'accident : reset trop loin
+# L'accident : reset trop loin (on voulait HEAD~2, on a tapé HEAD~5)
 git reset --hard HEAD~5
 
 git log --oneline -3
-# Les 5 derniers commits ont disparu
+# Les commits récents ont disparu !
 ```
 
 ### Diagnostic
@@ -38,10 +57,12 @@ git reflog | head -10
 ```
 
 Vous verrez :
+
 ```
 abc1234 HEAD@{0}: reset: moving to HEAD~5
-def5678 HEAD@{1}: commit: chore: release v1.0.0      ← votre dernier "bon" commit
-ghi9012 HEAD@{2}: commit: feat: add social links
+def5678 HEAD@{1}: commit: feat(sponsors): add Clever Cloud as silver sponsor  ← votre dernier "bon" commit
+ghi9012 HEAD@{2}: commit: feat(sponsors): add Netlify as silver sponsor
+jkl3456 HEAD@{3}: commit: feat(sponsors): add Vercel as gold sponsor
 ...
 ```
 
@@ -53,7 +74,7 @@ git reset --hard HEAD@{1}
 
 # Vérifier
 git log --oneline -5
-# Les 5 commits sont de retour !
+# Les 3 commits sponsors sont de retour !
 
 # Option 2 : si vous avez noté le hash
 git reset --hard $LAST
@@ -61,17 +82,57 @@ git reset --hard $LAST
 
 :::tip Réflexe à avoir
 Avant tout `git reset --hard`, notez le hash actuel :
+
 ```bash
 git rev-parse HEAD  # copier ce hash dans votre terminal
 ```
+
 Ou configurez votre terminal pour afficher le hash dans le prompt.
 :::
 
 ## Scénario 2 — La branche supprimée (15 min)
 
-### La situation
+### Préparation
 
-Le script de setup a créé `feature/cfp-form` et l'a supprimée pour simuler l'accident. Votre mission : la retrouver.
+:::note Script de setup
+Si vous avez utilisé le script de setup, la branche est déjà supprimée — passez directement à [La situation](#la-situation).
+:::
+
+Si vous avez cloné le repo, simulez l'accident maintenant :
+
+```bash
+cd ~/git-workshop/ng-baguette-conf
+git switch main
+
+# Vérifier que la branche n'existe pas déjà
+git branch | grep cfp-form || (
+  git switch -c feature/cfp-form
+  mkdir -p src/pages/fr
+  cat > src/pages/fr/cfp.astro << 'EOF'
+---
+import Layout from "../../layouts/Layout.astro";
+---
+<Layout title="CFP — NG Baguette Conf">
+  <div class="max-w-2xl">
+    <h1 class="text-3xl font-bold mb-6">Call for Papers</h1>
+    <form class="space-y-4" action="/api/cfp" method="POST">
+      <input name="title" type="text" class="input input-bordered" required />
+      <textarea name="abstract" class="textarea textarea-bordered h-32" required></textarea>
+      <button type="submit" class="btn btn-primary w-full">Soumettre ma proposition</button>
+    </form>
+  </div>
+</Layout>
+EOF
+  git add src/pages/fr/cfp.astro
+  git commit -m "feat(cfp): add CFP submission form"
+  git switch main
+  git branch -D feature/cfp-form
+)
+```
+
+### La situation {#la-situation}
+
+La branche `feature/cfp-form` a été supprimée après avoir été mergée (enfin, c'est ce qu'on croyait). Votre mission : la retrouver.
 
 ```bash
 # Vérifier que la branche n'existe plus
@@ -97,9 +158,9 @@ Notez le hash du dernier commit **sur** la branche (avant le checkout vers main)
 
 ```bash
 # Recréer la branche à partir de ce commit (ajustez le numéro selon votre reflog)
-git checkout -b feature/cfp-form HEAD@{6}
+git switch -C feature/cfp-form HEAD@{6}
 # OU avec le hash directement (plus fiable)
-git checkout -b feature/cfp-form <hash>
+git switch -C feature/cfp-form <hash>
 
 git log --oneline -3
 # feat(cfp): add CFP submission form  ← récupéré !
@@ -116,7 +177,7 @@ git fsck --lost-found
 # Inspecter les commits orphelins
 git show abc1234 --stat
 # S'il s'agit de votre commit, récupérez-le
-git checkout -b feature/cfp-form abc1234
+git switch -C feature/cfp-form abc1234
 ```
 
 ### Vérification
@@ -188,7 +249,7 @@ git show abc1234
 # Récupérer
 git stash apply abc1234
 # OU créer une branche
-git checkout -b rescue/stash abc1234
+git switch -C rescue/stash abc1234
 ```
 
 ## Configurer une rétention plus longue
@@ -214,7 +275,7 @@ git reflog | grep "commit"          # filtrer par type d'opération
 
 # Récupération
 git reset --hard HEAD@{N}           # revenir N étapes en arrière
-git checkout -b rescue HEAD@{N}     # créer une branche de secours
+git switch -C rescue HEAD@{N}     # créer une branche de secours
 git cherry-pick HEAD@{N}            # récupérer un seul commit
 ```
 
@@ -223,11 +284,12 @@ git cherry-pick HEAD@{N}            # récupérer un seul commit
 ## 🏆 Challenge — Le "vendredi soir"
 
 Situation : votre collègue vous passe son laptop et dit :
-> *"J'ai fait `git reset --hard` mais je sais plus sur quoi j'étais. Aide-moi."*
+
+> _"J'ai fait `git reset --hard` mais je sais plus sur quoi j'étais. Aide-moi."_
 
 ```bash
 # Recréer l'état désastreux
-git checkout main
+git switch main
 git reset --hard HEAD~8
 
 # À vous de jouer :

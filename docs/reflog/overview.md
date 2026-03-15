@@ -5,10 +5,11 @@ sidebar_position: 1
 # Reflog — Le filet de sécurité que vous ne saviez pas avoir
 
 :::info Durée : 30 minutes
+
 - 5 min : concept
 - 22 min : 3 scénarios de récupération
 - 3 min : configuration et bonnes pratiques
-:::
+  :::
 
 ## "J'ai tout cassé"
 
@@ -23,7 +24,7 @@ Silence. Sueurs froides. Trois commits de travail s'envolent.
 
 ## Ce qu'est vraiment le reflog
 
-Le **reflog** (reference log) est un journal local de *toutes* les modifications de HEAD et des branches. Chaque fois que HEAD bouge — checkout, commit, reset, rebase, merge, cherry-pick — Git l'enregistre.
+Le **reflog** (reference log) est un journal local de _toutes_ les modifications de HEAD et des branches. Chaque fois que HEAD bouge — checkout, commit, reset, rebase, merge, cherry-pick — Git l'enregistre.
 
 ```bash
 git reflog
@@ -36,10 +37,10 @@ git reflog
 
 Ce journal est **local uniquement** — il n'est pas pushé sur le remote. Et les entrées ont une durée de vie limitée :
 
-| Type d'entrée | Durée de vie par défaut |
-|--------------|------------------------|
-| Entrées normales | 90 jours |
-| Entrées orphelines (non atteignables) | 30 jours |
+| Type d'entrée                         | Durée de vie par défaut |
+| ------------------------------------- | ----------------------- |
+| Entrées normales                      | 90 jours                |
+| Entrées orphelines (non atteignables) | 30 jours                |
 
 Moralité : vous avez du temps, mais pas indéfiniment.
 
@@ -57,18 +58,18 @@ d4e5f6a HEAD@{0}: reset: moving to HEAD~3
 ```bash
 git show HEAD@{2}                    # voir le commit 2 étapes en arrière
 git diff HEAD@{0} HEAD@{5}           # diff entre maintenant et 5 étapes avant
-git checkout -b rescue HEAD@{1}      # créer une branche depuis l'état précédent
+git switch -C rescue HEAD@{1}      # créer une branche depuis l'état précédent
 git cherry-pick HEAD@{3}             # appliquer un commit "perdu"
 git reset --hard HEAD@{N}            # revenir à un état précédent
 ```
 
 ## Ce que le reflog sauve
 
-| Opération dangereuse | Récupérable ? |
-|---------------------|--------------|
-| `git reset --hard HEAD~N` | ✅ Oui |
-| `git branch -D ma-branche` | ✅ Oui |
-| `git commit --amend` (mauvais) | ✅ Oui |
-| `git rebase` catastrophique | ✅ Oui |
-| `git clean -fd` (fichiers non-trackés) | ❌ Non |
-| `git stash drop` | ✅ Oui (via reflog des stash) |
+| Opération dangereuse                   | Récupérable ?                 |
+| -------------------------------------- | ----------------------------- |
+| `git reset --hard HEAD~N`              | ✅ Oui                        |
+| `git branch -D ma-branche`             | ✅ Oui                        |
+| `git commit --amend` (mauvais)         | ✅ Oui                        |
+| `git rebase` catastrophique            | ✅ Oui                        |
+| `git clean -fd` (fichiers non-trackés) | ❌ Non                        |
+| `git stash drop`                       | ✅ Oui (via reflog des stash) |

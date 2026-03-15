@@ -171,6 +171,9 @@ git log --oneline feature/speaker-search ^main
 cd ~/git-workshop/ng-baguette-conf
 git switch main
 
+# Nettoyer le worktree nav
+git worktree remove ../ng-baguette-nav
+
 # Merger responsive-nav
 git merge feature/responsive-nav --no-ff -m "merge: feature/responsive-nav"
 git branch -D feature/responsive-nav

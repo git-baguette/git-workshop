@@ -80,7 +80,7 @@ git reflog --relative-date
 # Récupérer un commit perdu
 git reset --hard HEAD@{N}          # reset dur
 git reset --soft HEAD@{N}          # garde les changements stagés
-git checkout -b nouvelle-branche HEAD@{N}  # sur une nouvelle branche
+git switch -C nouvelle-branche HEAD@{N}  # sur une nouvelle branche
 git cherry-pick HEAD@{N}           # applique UN commit
 
 # Chercher dans le reflog
