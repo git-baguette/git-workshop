@@ -13,7 +13,7 @@ Avoir exécuté le [script de setup](/docs/setup). Le projet ng-baguette-conf co
 ### Préparation
 
 :::note Point de départ commun
-Ces commandes créent 3 commits sur main pour simuler "un travail récent à ne pas perdre". Exécutez-les même si vous avez déjà fait les exercices précédents — elles sont idempotentes.
+Ces commandes créent 3 commits sur main pour simuler "un travail récent à ne pas perdre".
 :::
 
 ```bash
@@ -21,14 +21,14 @@ cd ~/git-workshop/ng-baguette-conf
 git switch main
 
 # Créer 3 commits qui vont "disparaître"
-echo "sponsor-gold: Vercel" >> src/data/sponsors.json 2>/dev/null || echo "Vercel" >> sponsors.txt
-git add -A && git commit -m "feat(sponsors): add Vercel as gold sponsor"
+echo "sponsor-gold: Google" >> src/data/sponsors.json 2>/dev/null || echo "Google" >> sponsors.txt
+git add -A && git commit -m "feat(sponsors): add Google as gold sponsor"
 
-echo "sponsor-silver: Netlify" >> src/data/sponsors.json 2>/dev/null || echo "Netlify" >> sponsors.txt
-git add -A && git commit -m "feat(sponsors): add Netlify as silver sponsor"
+echo "sponsor-silver: Angular" >> src/data/sponsors.json 2>/dev/null || echo "Angular" >> sponsors.txt
+git add -A && git commit -m "feat(sponsors): add Angular as silver sponsor"
 
-echo "sponsor-silver: Clever Cloud" >> src/data/sponsors.json 2>/dev/null || echo "Clever Cloud" >> sponsors.txt
-git add -A && git commit -m "feat(sponsors): add Clever Cloud as silver sponsor"
+echo "sponsor-silver: Devoxx" >> src/data/sponsors.json 2>/dev/null || echo "Devoxx" >> sponsors.txt
+git add -A && git commit -m "feat(sponsors): add Devoxx as silver sponsor"
 
 git log --oneline -5
 # Vous devriez voir vos 3 nouveaux commits en tête de liste
