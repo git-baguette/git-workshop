@@ -19,6 +19,12 @@ git config --global alias.st status
 
 Maintenant, `git st` équivaut à `git status`. Vous pouvez créer des alias pour toutes les commandes que vous utilisez souvent.
 
+### Exercices pour les alias simples
+
+- **Alias `ci`** : Créez l'alias `ci` pour `commit`. Commitez vos changements : `git ci -m "mon message"`.
+
+- **Alias `st`** : Créez l'alias `st` pour `status`. Vérifiez l'état de votre repo : `git st`.
+
 ### Alias utiles pour le quotidien
 
 - `unstage` : pour désindexer un fichier (équivalent à `reset HEAD --`)
@@ -32,6 +38,12 @@ git config --global alias.unstage 'reset HEAD --'
 ```bash
 git config --global alias.last 'log -1 HEAD'
 ```
+
+#### Exercices pour les alias utiles
+
+- **Alias `unstage`** : Créez l'alias. Ajoutez un fichier à l'index (`git add fichier`), puis désindexez-le : `git unstage fichier`.
+
+- **Alias `last`** : Créez l'alias. Affichez le dernier commit : `git last`.
 
 ## Définir les alias dans le fichier `.gitconfig`
 
@@ -58,6 +70,10 @@ Exemple simple (pour illustration) :
     echo = "!f() { echo $1; }; f"
 ```
 
+### Exercice pour l'alias avancé
+
+- **Alias `echo`** : Créez l'alias. Testez-le : `git echo "Hello World"`.
+
 ## Exemples pratiques pour les workflows Git
 
 ### `git new-mr` : Créer une merge request en une commande
@@ -75,6 +91,10 @@ Note : `${2:-${1}}` signifie "utiliser $2 si défini, sinon $1" (équivalent à 
 
 Si vous n'utilisez pas GitLab, retirez les options `-o`.
 
+#### Exercice pour `git new-mr`
+
+- Créez l'alias `new-mr`. Testez-le en créant une nouvelle branche et une MR : `git new-mr feature-test "Test feature"`.
+
 ### `git update-mr` : Rebase et pousser la branche courante
 
 Met à jour la branche `main`, rebase la branche courante, et pousse sans écraser les commits distants.
@@ -84,12 +104,20 @@ Met à jour la branche `main`, rebase la branche courante, et pousse sans écras
     update-mr = "!f() { git fetch --all && git rebase origin/main && git push --force-with-lease; }; f"
 ```
 
+#### Exercice pour `git update-mr`
+
+- Créez l'alias `update-mr`. Sur une branche feature, exécutez `git update-mr` pour rebase et pousser.
+
 ### `git bisect-show-bad` : Afficher le commit fautif après un bisect
 
 ```ini
 [alias]
     bisect-show-bad = "!git show $(git bisect log | grep '# bad' | tail -1 | awk '{print $3}' | tr -d '[]')"
 ```
+
+#### Exercice pour `git bisect-show-bad`
+
+- Créez l'alias. Après un `git bisect` terminé, utilisez `git bisect-show-bad` pour voir le commit fautif.
 
 ## Cheat sheet
 
