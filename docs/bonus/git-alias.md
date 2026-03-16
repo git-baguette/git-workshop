@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 # git alias — Gagner du temps sur les commandes du quotidien
