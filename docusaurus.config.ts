@@ -15,15 +15,16 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://git-baguette.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/git-workshop/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'git-workshop', // Usually your GitHub org/user name.
+  organizationName: 'git-baguette', // Usually your GitHub org/user name.
   projectName: 'git-workshop', // Usually your repo name.
+  deploymentBranch: 'main',
 
   onBrokenLinks: 'throw',
 
