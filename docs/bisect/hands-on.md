@@ -5,7 +5,7 @@ sidebar_position: 2
 # TP — Débusquer le bug de tri dans NG Baguette Conf
 
 :::info Prérequis
-Avoir exécuté le [script de setup](/docs/setup). Le bug est planté dans le projet ng-baguette-conf.
+Avoir exécuté le [setup](/docs/setup). Le projet ng-baguette-conf doit être fonctionnel.
 :::
 
 ## Vérifier la présence du bug
@@ -19,6 +19,7 @@ cd ~/git-workshop/ng-baguette-conf
 Le symptôme visible : l'agenda affiche les sessions en ordre **anti-chronologique** (la dernière session de la journée apparaît en premier).
 
 Vous savez :
+
 - **Maintenant** (`HEAD`) : le bug est là
 - **Au début** (premier commit) : le code était correct
 
@@ -52,6 +53,7 @@ Git vous a checkout un commit au milieu. Testez-le :
 ```
 
 Selon le résultat :
+
 - **Exit: 0** → `git bisect good`
 - **Exit: 1** → `git bisect bad`
 - **Exit: 125** → `git bisect skip` (fichier pas encore créé dans les premiers commits)
@@ -104,6 +106,7 @@ cat bisect-test.sh
 ```
 
 Il détecte le bug en inspectant le fichier `schedule.ts` :
+
 - Exit 0 → commit bon (`a.start - b.start` = ordre chronologique)
 - Exit 1 → commit mauvais (`b.start - a.start` = ordre inversé)
 - Exit 125 → commit à skipper (fichier pas encore créé dans les commits 1-11)
