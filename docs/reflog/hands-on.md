@@ -5,7 +5,7 @@ sidebar_position: 2
 # TP — Ressusciter des commits perdus
 
 :::info Prérequis
-Avoir exécuté le [script de setup](/docs/setup). Le projet ng-baguette-conf contient une branche `feature/cfp-form` **supprimée** à retrouver.
+Avoir exécuté le [setup](/docs/setup). Le projet ng-baguette-conf doit être fonctionnel.
 :::
 
 ## Scénario 1 — Le `reset --hard` catastrophique (15 min)
@@ -95,7 +95,7 @@ Ou configurez votre terminal pour afficher le hash dans le prompt.
 ### Préparation
 
 :::note Script de setup
-Si vous avez utilisé le script de setup, la branche est déjà supprimée — passez directement à [La situation](#la-situation).
+Si vous avez utilisé le script de setup, la branche est déjà supprimée — passez directement à [La situation](#la-situation2).
 :::
 
 Si vous avez cloné le repo, simulez l'accident maintenant :
@@ -130,7 +130,7 @@ EOF
 )
 ```
 
-### La situation {#la-situation}
+### La situation {#la-situation2}
 
 La branche `feature/cfp-form` a été supprimée après avoir été mergée (enfin, c'est ce qu'on croyait). Votre mission : la retrouver.
 
@@ -154,7 +154,7 @@ git reflog | grep -E "(cfp-form|cfp)"
 # HEAD@{6}: commit: feat(cfp): add CFP submission form  ← dernier commit de la branche
 ```
 
-Notez le hash du dernier commit **sur** la branche (avant le checkout vers main).
+Notez le hash du dernier commit **sur** la branche (avant le switch vers main).
 
 ```bash
 # Recréer la branche à partir de ce commit (ajustez le numéro selon votre reflog)
@@ -192,20 +192,63 @@ cat src/pages/fr/cfp.astro
 
 ## Scénario 3 — Le rebase catastrophique (10 min)
 
-### La situation
+### Préparation
 
-Vous rebasez `feature/speaker-search` sur main. Quelque chose se passe mal. Vous vous retrouvez dans un état incompréhensible.
+:::note Branche créée ici
+Ce scénario crée sa propre branche — pas de dépendance avec les autres modules.
+:::
 
 ```bash
-git checkout feature/speaker-search
+cd ~/git-workshop/ng-baguette-conf
+git switch main
 
-# Simuler un rebase qui déraille
+# Créer une branche feature qui diverge de main
+git switch -c feature/speaker-bio
+
+# Ajouter un fichier sur la branche
+mkdir -p src/data
+cat > src/data/bio.md << 'EOF'
+# Bio Template
+Speaker: À définir
+Topic: À définir
+EOF
+git add src/data/bio.md
+git commit -m "feat(speakers): add bio template"
+
+# Faire diverger main (simule un commit d'un collègue)
+git switch main
+
+mkdir -p src/data
+cat > src/data/bio.md << 'EOF'
+# Bio Template
+Speaker: Jane Smith
+Topic: Angular 2025 State of the Art
+EOF
+git add src/data/bio.md
+git commit -m "docs(speakers): fill bio with confirmed speaker"
+
+# Retourner sur la branche
+git switch feature/speaker-bio
+```
+
+### La situation
+
+Vous rebasez `feature/speaker-bio` sur main. Un conflit apparaît. Vous tentez de le résoudre à la va-vite — et vous vous trompez.
+
+```bash
 git rebase main
-# (Des conflits apparaissent, vous faites des erreurs en les résolvant...)
+# CONFLICT (add/add): Merge conflict in src/data/bio.md
+# error: could not apply...
 
-# Votre code n'a plus l'air de ce qu'il devrait être
+# Mauvaise résolution : vous écrasez tout
+echo "# Bio mal fusionnée — travail perdu" > src/data/bio.md
+git add src/data/bio.md
+git rebase --continue
+
+# Le rebase termine, mais le contenu est mauvais
 git log --oneline -5
-# Quelque chose ne va pas
+cat src/data/bio.md
+# Pas ce qu'on voulait...
 ```
 
 ### Récupération immédiate
@@ -217,13 +260,17 @@ git rebase --abort
 
 # Option 2 : si vous avez déjà fini mais que le résultat est mauvais
 git reflog
-# HEAD@{0}: rebase (finish): returning to refs/heads/feature/speaker-search
-# HEAD@{1}: rebase (pick): feat: add SpeakerSearch component with live filtering
+# HEAD@{0}: rebase (finish): returning to refs/heads/feature/speaker-bio
+# HEAD@{1}: rebase (pick): feat(speakers): add bio template
 # HEAD@{2}: rebase (start): checkout main
-# HEAD@{3}: commit: feat: add SpeakerSearch component  ← état avant rebase
+# HEAD@{3}: commit: feat(speakers): add bio template  ← état avant rebase
 
 # Revenir à l'état avant le rebase
 git reset --hard HEAD@{3}
+
+# Vérifier
+cat src/data/bio.md
+# Le contenu original est restauré !
 ```
 
 :::tip Identifier "avant le rebase" dans le reflog
@@ -235,6 +282,7 @@ Cherchez la ligne `rebase (start): checkout main`. La ligne juste **après** dan
 ```bash
 # Créer et dropper un stash
 echo "travail important non sauvé" > travail-urgent.txt
+git add -A
 git stash push -m "WIP: travail urgent"
 git stash drop
 # Dropped refs/stash@{0} (abc1234)
