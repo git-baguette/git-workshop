@@ -2,6 +2,7 @@ import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 type FeatureItem = {
   title: string;
@@ -25,7 +26,7 @@ const FeatureList: FeatureItem[] = [
         accessibles instantanément dans des dossiers séparés.
       </>
     ),
-    link: '/docs/worktrees/overview',
+    link: 'docs/worktrees/overview',
   },
   {
     title: 'Reflog',
@@ -39,7 +40,7 @@ const FeatureList: FeatureItem[] = [
         le reflog est votre filet de sécurité ultime.
       </>
     ),
-    link: '/docs/reflog/overview',
+    link: 'docs/reflog/overview',
   },
   {
     title: 'Bisect',
@@ -53,7 +54,7 @@ const FeatureList: FeatureItem[] = [
         manuellement ou entièrement automatisée avec un script de test.
       </>
     ),
-    link: '/docs/bisect/overview',
+    link: 'docs/bisect/overview',
   },
   {
     title: 'Rebase',
@@ -67,7 +68,7 @@ const FeatureList: FeatureItem[] = [
         maîtrisez le rebase interactif pour un historique qui raconte une histoire.
       </>
     ),
-    link: '/docs/rebase/overview',
+    link: 'docs/rebase/overview',
   },
   {
     title: 'Workflows',
@@ -81,7 +82,7 @@ const FeatureList: FeatureItem[] = [
         arrêtez de subir celui qu'on vous a imposé.
       </>
     ),
-    link: '/docs/workflows/overview',
+    link: 'docs/workflows/overview',
   },
 ];
 
@@ -111,12 +112,13 @@ function Feature({title, emoji, badge, duration, description, link}: FeatureItem
 }
 
 export default function HomepageFeatures(): ReactNode {
+  const {siteConfig} = useDocusaurusContext();
   return (
     <section className={styles.features}>
       <div className="container">
         <div className="row" style={{justifyContent: 'center'}}>
           {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
+            <Feature key={idx} {...props} link={siteConfig.baseUrl + props.link} />
           ))}
         </div>
       </div>
