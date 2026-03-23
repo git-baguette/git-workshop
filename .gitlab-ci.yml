@@ -1,0 +1,23 @@
+image: node:20-alpine
+
+stages:
+  - deploy
+
+cache:
+  key: $CI_COMMIT_REF_SLUG
+  paths:
+    - .pnpm-store
+  policy: pull-push
+
+before_script:
+  - pnpm config set store-dir .pnpm-store
+
+create-pages:
+  stage: deploy
+  script:
+  - pnpm install
+  - pnpm build
+  - mv ./build public
+  pages: true
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
