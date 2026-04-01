@@ -44,9 +44,9 @@ C'est tout.
 
 ```bash
 # Toujours depuis main à jour
-git checkout main
+git switch main
 git pull origin main
-git checkout -b feature/export-csv
+git switch -C feature/export-csv
 
 # Développement
 cat > src/utils/export.js << 'EOF'
@@ -68,7 +68,7 @@ git push -u origin feature/export-csv
 
 ```bash
 # Option 1 : Merge commit (historique lisible)
-git checkout main
+git switch main
 git merge --no-ff feature/export-csv
 
 # Option 2 : Squash merge (historique propre)
@@ -77,7 +77,7 @@ git commit -m "feat(export): add CSV export (#42)"
 
 # Option 3 : Rebase (linéaire, sans merge commits)
 git rebase main feature/export-csv
-git checkout main
+git switch main
 git merge --ff-only feature/export-csv
 
 # Supprimer la branche
@@ -90,8 +90,8 @@ git push origin --delete feature/export-csv
 Pas de branche spéciale — même process qu'une feature :
 
 ```bash
-git checkout main
-git checkout -b fix/login-validation
+git switch main
+git swithc -C fix/login-validation
 git commit -m "fix(auth): add input validation"
 # PR → review → merge → déploiement
 ```
@@ -101,27 +101,33 @@ git commit -m "fix(auth): add input validation"
 C'est le seul vrai sujet de débat dans GitHub Flow. Voici les positions :
 
 ### Merge commit (`--no-ff`)
+
 ```
 main: A──B──M──────
             │
 feature:  C──D
 ```
+
 - ✅ Contexte préservé (savoir qu'on était sur une feature)
 - ✅ Facile à reverter (un seul commit à reverter)
 - ❌ Historique non linéaire
 
 ### Squash merge
+
 ```
 main: A──B──CD──────
 ```
+
 - ✅ Historique ultra-propre
 - ✅ Chaque feature = 1 commit sur main
 - ❌ Perd le détail des commits intermédiaires
 
 ### Rebase + fast-forward
+
 ```
 main: A──B──C──D──────
 ```
+
 - ✅ Historique linéaire, tous les commits visibles
 - ❌ Réécriture de l'historique (SHA différents)
 - ❌ Force push nécessaire sur la branche
@@ -133,12 +139,14 @@ Choisissez **une politique** et tenez-y. L'incohérence est pire que n'importe q
 ## Avantages et inconvénients
 
 ### ✅ Avantages
+
 - Extrêmement simple à expliquer et à suivre
 - Favorise le déploiement continu
 - Peu de branches longues = moins de conflits
 - Adapté aux petites et moyennes équipes
 
 ### ❌ Inconvénients
+
 - Requiert une CI/CD solide (sinon `main` n'est pas "toujours déployable")
 - Pas adapté si vous maintenez plusieurs versions en prod
 - Les feature flags deviennent indispensables pour les grosses features

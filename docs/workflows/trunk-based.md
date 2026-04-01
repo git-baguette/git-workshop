@@ -27,9 +27,9 @@ Puisqu'on ne peut pas cacher une feature incomplète derrière une branche longu
 ```js
 // src/config/features.js
 export const FEATURES = {
-  darkMode:   process.env.FEATURE_DARK_MODE   === "true",
-  exportCsv:  process.env.FEATURE_EXPORT_CSV  === "true",
-  analytics:  process.env.FEATURE_ANALYTICS   === "true",
+  darkMode: process.env.FEATURE_DARK_MODE === "true",
+  exportCsv: process.env.FEATURE_EXPORT_CSV === "true",
+  analytics: process.env.FEATURE_ANALYTICS === "true",
 };
 ```
 
@@ -41,7 +41,7 @@ function AppMenu() {
   return (
     <menu>
       <li>Tasks</li>
-      {FEATURES.darkMode  && <li>Dark Mode</li>}
+      {FEATURES.darkMode && <li>Dark Mode</li>}
       {FEATURES.exportCsv && <li>Export CSV</li>}
     </menu>
   );
@@ -52,20 +52,20 @@ La feature est dans `main`, mais invisible tant que le flag est `false`. On acti
 
 ## Pratiques associées indispensables
 
-| Pratique | Pourquoi c'est critique |
-|---------|------------------------|
-| **Tests automatisés** | Sans tests solides, merger direct sur main = chaos |
-| **CI rapide** | Si la CI prend 30 min, personne ne voudra merger souvent |
-| **Feature flags** | Pour déployer sans exposer les features incomplètes |
+| Pratique                                 | Pourquoi c'est critique                                             |
+| ---------------------------------------- | ------------------------------------------------------------------- |
+| **Tests automatisés**                    | Sans tests solides, merger direct sur main = chaos                  |
+| **CI rapide**                            | Si la CI prend 30 min, personne ne voudra merger souvent            |
+| **Feature flags**                        | Pour déployer sans exposer les features incomplètes                 |
 | **Pair programming / code review async** | Le review se fait sur de petits commits, pas des PRs de 1000 lignes |
-| **Rollback facile** | `git revert` doit être réflexe |
+| **Rollback facile**                      | `git revert` doit être réflexe                                      |
 
 ## Exemple avec NG Baguette Conf
 
 ### Committer directement sur main (petits changements)
 
 ```bash
-git checkout main
+git switch main
 git pull
 
 # Fix rapide
@@ -78,8 +78,8 @@ git push
 ### Feature avec branche courte (moins de 2 jours)
 
 ```bash
-git checkout main && git pull
-git checkout -b feature/keyboard-shortcuts  # max 2 jours de vie
+git switch main && git pull
+git switch -b feature/keyboard-shortcuts  # max 2 jours de vie
 
 # Jour 1 : implémentation
 git commit -m "feat(ui): add keyboard shortcut handler"
@@ -89,9 +89,9 @@ git commit -m "test: add keyboard shortcuts tests"
 git commit -m "feat(ui): add shortcuts for new task and search"
 
 # Merger rapidement
-git checkout main && git pull
+git switch main && git pull
 git rebase main feature/keyboard-shortcuts  # ou merge, selon votre politique
-git checkout main
+git switch main
 git merge --ff-only feature/keyboard-shortcuts
 git push
 git branch -d feature/keyboard-shortcuts
@@ -101,7 +101,7 @@ git branch -d feature/keyboard-shortcuts
 
 ```bash
 # On travaille directement sur main, feature cachée par flag
-git checkout main
+git switch main
 
 # Jour 1
 cat >> src/config/features.js << 'EOF'
@@ -121,12 +121,14 @@ git commit -m "feat(analytics): enable analytics v2 by default"
 ## Avantages et inconvénients
 
 ### ✅ Avantages
+
 - Intégration vraiment continue — pas de "merge hell"
 - Feedback immédiat sur la qualité du code
 - Releases triviales (main est toujours prêt)
 - Détection précoce des conflits
 
 ### ❌ Inconvénients
+
 - Requiert une discipline d'équipe très forte
 - La CI doit être ultra-rapide et fiable
 - Les feature flags doivent être gérés (nettoyés quand obsolètes)
