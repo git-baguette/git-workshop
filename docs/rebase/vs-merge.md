@@ -64,7 +64,7 @@ nop678  feat(utils): add sortByPriority
 ## TP — Mettre à jour une feature branch avec rebase
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd ~/git-baguette/git-workshop-starter
 git checkout feature/speaker-search
 
 # Vérifier la divergence avec main

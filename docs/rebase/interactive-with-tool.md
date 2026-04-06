@@ -28,7 +28,7 @@ TODO: penser à inclure git-interactive-rebase-tool dans le codespace
 Imaginons que vous travailliez sur un nouveau composant de recherche. La branche `feature/search-bar` contient déjà un premier commit :
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd ~/git-baguette/git-workshop-starter
 git checkout feature/search-bar
 
 # historique initial
