@@ -84,6 +84,19 @@ const FeatureList: FeatureItem[] = [
     ),
     link: 'docs/workflows/overview',
   },
+  {
+    title: 'Bonus',
+    emoji: '🎁',
+    badge: 'Module 6',
+    duration: '15 min',
+    description: (
+      <>
+        Hooks, alias, astuces de config, commandes moins connues — un
+        condensé de tips pour booster votre productivité et épater vos collègues.
+      </>
+    ),
+    link: 'docs/bonus/overview',
+  },
 ];
 
 function Feature({title, emoji, badge, duration, description, link}: FeatureItem) {
