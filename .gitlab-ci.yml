@@ -23,3 +23,4 @@ create-pages:
         - pnpm-lock.yaml
     paths:
       - .pnpm-store
+  pages: true
