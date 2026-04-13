@@ -15,8 +15,8 @@ Ce workshop est fait pour vous.
 | 00:00   | 10 min | Introduction + setup du projet                               |
 | 00:10   | 35 min | **Module 1** — Worktrees : 3 features en même temps          |
 | 00:45   | 30 min | **Module 2** — Reflog : ressusciter des commits perdus       |
-| 01:15   | 10 min | ☕ Pause                                                     |
-| 01:25   | 25 min | **Module 3** — Bisect : débusquer le coupable                |
+| 01:15   | 25 min | **Module 3** — Bisect : débusquer le coupable                |
+| 01:40   | 10 min | ☕ Pause                                                     |
 | 01:50   | 35 min | **Module 4** — Rebase : réécrire l'histoire (proprement)     |
 | 02:25   | 15 min | **Module 5** — Workflows : Gitflow, GitHub Flow, Trunk-Based |
 | 02:40   | 20 min | Wrap-up, questions & challenges à faire chez soi             |
