@@ -5,7 +5,11 @@ sidebar_position: 2
 # TP — Jongler avec 3 branches simultanément
 
 :::info Prérequis
-Avoir exécuté le [setup](/docs/setup). ng-baguette-conf doit exister dans `~/git-workshop/ng-baguette-conf` avec les branches `feature/responsive-nav` et `feature/speaker-search`.
+Avoir exécuté le [setup](/docs/setup). 
+
+Si vous avez déjà executé un autre module, lancer la commande `git switch main && git reset --hard origin/main`.
+
+Ng-baguette-conf doit exister dans `~/git-workshop/ng-baguette-conf` avec les branches `feature/responsive-nav` et `feature/speaker-search`.
 :::
 
 ## Exercice 1 — Visualiser la situation initiale (5 min)

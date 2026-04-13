@@ -5,7 +5,11 @@ sidebar_position: 2
 # TP — Débusquer le bug de tri dans NG Baguette Conf
 
 :::info Prérequis
-Avoir exécuté le [setup](/docs/setup). Le projet ng-baguette-conf doit être fonctionnel.
+Avoir exécuté le [setup](/docs/setup).
+
+Si vous avez déjà executé un module précedent, lancer la commande `git switch main && git reset --hard origin/main`.
+
+Le projet ng-baguette-conf doit être fonctionnel.
 :::
 
 ## Vérifier la présence du bug
