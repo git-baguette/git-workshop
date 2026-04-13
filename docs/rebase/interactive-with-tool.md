@@ -29,7 +29,7 @@ Imaginons que vous travailliez sur un nouveau composant de recherche. La branche
 
 ```bash
 cd ~/git-baguette/git-workshop-starter
-git checkout feature/search-bar
+git switch feature/search-bar
 
 # historique initial
 git log --oneline feature/search-bar ^main

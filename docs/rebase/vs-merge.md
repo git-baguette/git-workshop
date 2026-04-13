@@ -13,7 +13,7 @@ Voici ce que donnent les deux approches :
 ### Avec merge
 
 ```bash
-git checkout feature/dark-mode
+git switch feature/dark-mode
 git merge main
 ```
 
@@ -40,7 +40,7 @@ feature:  A──B──D──E──────M   (M = merge commit)
 ### Avec rebase
 
 ```bash
-git checkout feature/dark-mode
+git switch feature/dark-mode
 git rebase main
 ```
 
@@ -65,7 +65,7 @@ nop678  feat(utils): add sortByPriority
 
 ```bash
 cd ~/git-baguette/git-workshop-starter
-git checkout feature/speaker-search
+git switch feature/speaker-search
 
 # Vérifier la divergence avec main
 git log --oneline feature/export-csv ^main
@@ -92,11 +92,11 @@ Les conflits en rebase se gèrent comme en merge, mais **un commit à la fois** 
 
 ```bash
 # Simuler un conflit
-git checkout main
+git switch main
 echo "// version main" >> src/utils/sort.js
 git add . && git commit -m "refactor(sort): add main comment"
 
-git checkout feature/export-csv
+git switch feature/export-csv
 echo "// version feature" >> src/utils/sort.js
 git add . && git commit -m "refactor(sort): add feature comment"
 
@@ -197,6 +197,6 @@ Après avoir trouvé le bug avec bisect (module précédent), nettoyez l'histori
 git log --oneline | grep "update priority constants"
 # abc123 refactor(sort): update priority constants
 
-git checkout -b fix/sort-priority abc123^
+git switch -C fix/sort-priority abc123^
 # (le ^ remonte d'un commit)
 ```

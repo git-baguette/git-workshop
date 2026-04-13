@@ -11,7 +11,7 @@ Les alias Git permettent de créer des raccourcis pour les commandes fréquemmen
 Pour créer un alias, utilisez `git config --global alias.<nom> "<commande>"`. Voici quelques exemples classiques :
 
 ```bash
-git config --global alias.co checkout
+git config --global alias.co switch
 git config --global alias.br branch
 git config --global alias.ci commit
 git config --global alias.st status
@@ -51,7 +51,7 @@ Au lieu d'utiliser `git config` à chaque fois, vous pouvez éditer directement 
 
 ```ini
 [alias]
-    co = checkout
+    co = switch
     br = branch
     ci = commit
     st = status
@@ -123,7 +123,7 @@ Met à jour la branche `main`, rebase la branche courante, et pousse sans écras
 
 ```bash
 # Alias simples
-git config --global alias.co checkout
+git config --global alias.co switch
 git config --global alias.br branch
 git config --global alias.ci commit
 git config --global alias.st status

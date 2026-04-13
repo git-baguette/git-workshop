@@ -1532,7 +1532,7 @@ commit "chore: release v1.0.0"
 MAIN_HASH=$(git rev-parse HEAD)
 
 # Branch feature/responsive-nav — WIP (rebase exercice)
-git checkout -b feature/responsive-nav --quiet
+git switch -C feature/responsive-nav --quiet
 cat > src/components/Header.astro << 'EOF'
 ---
 const lang = Astro.url.pathname.startsWith("/en") ? "en" : "fr";
@@ -1589,10 +1589,10 @@ cat >> src/components/Drawer.astro << 'EOF'
   });
 </script>
 EOF
-git checkout main --quiet
+git switch main --quiet
 
 # Branch feature/speaker-search — Complète (2 commits, worktrees exercice)
-git checkout -b feature/speaker-search --quiet
+git switch -C feature/speaker-search --quiet
 cat >> src/utils/schedule.ts << 'EOF'
 
 export function searchSpeakers(query: string): (Speaker & { sessions: Session[] })[] {
@@ -1642,10 +1642,10 @@ const allSpeakers = getAllSpeakers();
 </script>
 EOF
 git add -A && git commit -m "feat: add SpeakerSearch component with live filtering" --quiet
-git checkout main --quiet
+git switch main --quiet
 
 # Branch feature/cfp-form — sera "supprimée" pour l'exercice reflog
-git checkout -b feature/cfp-form --quiet
+git switch -C feature/cfp-form --quiet
 cat > src/pages/fr/cfp.astro << 'EOF'
 ---
 import Layout from "../../layouts/Layout.astro";
@@ -1683,12 +1683,12 @@ EOF
 git add -A && git commit -m "feat(cfp): add CFP submission form" --quiet
 
 CFP_FORM_HASH=$(git rev-parse HEAD)
-git checkout main --quiet
+git switch main --quiet
 
 # Simuler la suppression de la branche (exercice reflog)
 git branch -D feature/cfp-form
 
-git checkout main --quiet
+git switch main --quiet
 
 echo ""
 echo "✅ ng-baguette-conf prêt !"

@@ -232,10 +232,10 @@ set -e  # Arrêter en cas d'erreur
 echo "Création de la branche feature/responsive-nav..."
 
 # Assumer qu'on est sur main
-git checkout main
+git switch main
 
 # Créer la branche
-git checkout -b feature/responsive-nav
+git switch -C feature/responsive-nav
 
 # Premier commit : feat(nav): replace dropdown with drawer for mobile navigation
 # Simuler en créant/modifiant un fichier de base

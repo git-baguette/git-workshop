@@ -65,17 +65,17 @@ git add . && git commit -m "feat: initial config"
 
 ```bash
 # Branche A : augmente le timeout
-git checkout -b feature/longer-timeout
+git switch -C feature/longer-timeout
 sed -i '' 's/timeout: 30/timeout: 60/' config.js
 git add . && git commit -m "feat: double the timeout"
 
 # Branche B : valeur différente
-git checkout main
-git checkout -b feature/custom-timeout
+git switch main
+git switch -C feature/custom-timeout
 sed -i '' 's/timeout: 30/timeout: 45/' config.js
 git add . && git commit -m "feat: set timeout to 45s"
 
-git checkout main
+git switch main
 git merge feature/longer-timeout
 ```
 
