@@ -1,7 +1,7 @@
 {
   "label": "Module 5 — Workflows Git",
   "position": 7,
-  "collapsible": false,
+  "collapsible": true,
   "link": {
     "type": "doc",
     "id": "workflows/overview"

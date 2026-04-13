@@ -1,7 +1,7 @@
 {
   "label": "Module 1 — Worktrees",
   "position": 3,
-  "collapsible": false,
+  "collapsible": true,
   "link": {
     "type": "doc",
     "id": "worktrees/overview"

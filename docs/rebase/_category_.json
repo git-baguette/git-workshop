@@ -1,7 +1,7 @@
 {
   "label": "Module 4 — Rebase",
   "position": 6,
-  "collapsible": false,
+  "collapsible": true,
   "link": {
     "type": "doc",
     "id": "rebase/overview"
