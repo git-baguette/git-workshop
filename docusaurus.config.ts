@@ -85,6 +85,7 @@ const config: Config = {
             { label: '3 — Bisect',            to: '/docs/bisect/overview' },
             { label: '4 — Rebase',            to: '/docs/rebase/overview' },
             { label: '5 — Workflows',         to: '/docs/workflows/overview' },
+            { label: 'Bonus',                 to: '/docs/bonus/overview' },
           ],
         },
         {
