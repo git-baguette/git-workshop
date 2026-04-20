@@ -70,6 +70,11 @@ const config: Config = {
           position: 'left',
           label: 'Modules',
         },
+        {
+          to: '/about',
+          label: 'À propos',
+          position: 'right',
+        },
       ],
     },
     footer: {
