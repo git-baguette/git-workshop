@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Workflows Git — Lequel choisir ?
 
-:::info Durée : 15 minutes
+:::info À savoir
 Ce module est une vue d'ensemble comparative. Les pages suivantes détaillent chaque workflow pour approfondir après le workshop.
 :::
 

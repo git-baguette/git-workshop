@@ -4,13 +4,6 @@ sidebar_position: 1
 
 # Worktrees — 3 features en même temps sans devenir fou
 
-:::info Durée : 35 minutes
-
-- 5 min : concept + démonstration
-- 25 min : TP
-- 5 min : patterns avancés + challenges
-  :::
-
 ## Le scénario classique du vendredi
 
 Il est 14h. Vous êtes sur `feature/dark-mode`, vous avez 8 fichiers modifiés en cours. Votre manager arrive en courant :

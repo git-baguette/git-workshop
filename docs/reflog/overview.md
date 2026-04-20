@@ -4,13 +4,6 @@ sidebar_position: 1
 
 # Reflog — Le filet de sécurité que vous ne saviez pas avoir
 
-:::info Durée : 30 minutes
-
-- 5 min : concept
-- 22 min : 3 scénarios de récupération
-- 3 min : configuration et bonnes pratiques
-  :::
-
 ## "J'ai tout cassé"
 
 ```bash

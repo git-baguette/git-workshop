@@ -4,12 +4,6 @@ sidebar_position: 1
 
 # Git Bisect — Trouver le coupable en 6 questions
 
-:::info Durée : 25 minutes
-- 5 min : concept de la recherche binaire
-- 10 min : bisect manuel
-- 10 min : bisect automatique
-:::
-
 ## Le problème
 
 Un bug est en prod. Vous regardez votre historique :

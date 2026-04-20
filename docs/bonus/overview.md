@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Bonus — Astuces avancées pour maîtriser Git
 
-:::info Durée : 15 minutes
+:::info Compléments optionnels
 Ces modules sont des compléments optionnels pour aller plus loin. Ils couvrent des fonctionnalités puissantes mais moins connues de Git, idéales pour les développeurs qui veulent optimiser leur workflow quotidien.
 :::
 

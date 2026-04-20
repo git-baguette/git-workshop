@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Setup — Préparer le projet NG Baguette Conf
 
-:::info Durée : 5 minutes
+:::info À faire en premier
 Faites ceci avant tout autre module. Tous les TPs s'appuient sur ce projet.
 :::
 

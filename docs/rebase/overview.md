@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Rebase — Enfin comprendre ce que ça fait
 
-:::info Durée : 35 minutes
+:::info À savoir
 Ce module est souvent la révélation du workshop. Prenez le temps de bien assimiler le modèle mental avant de passer aux exercices.
 :::
 
