@@ -20,7 +20,7 @@ Faites ceci avant tout autre module. Tous les TPs s'appuient sur ce projet.
 
 ```bash
 mkdir -p ~/git-workshop && cd ~/git-workshop
-git clone https://github.com/yatho/git-workshop-starter.git ng-baguette-conf
+git clone https://github.com/git-baguette/git-workshop-starter.git ng-baguette-conf
 cd ng-baguette-conf
 git fetch origin feature/responsive-nav:feature/responsive-nav
 git fetch origin feature/speaker-search:feature/speaker-search

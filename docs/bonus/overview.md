@@ -14,12 +14,12 @@ Git est un outil riche, mais beaucoup de ses fonctionnalités restent dans l'omb
 
 ## Les astuces couvertes
 
-| Sujet | Description |
-|-------|-------------|
-| **[Git Alias](git-alias.md)** | Créez des raccourcis personnalisés pour vos commandes Git les plus utilisées. Transformez `git status` en `gs` et boostez votre productivité. |
-| **[Git Hooks](git-hook.md)** | Automatisez des actions avec des scripts déclenchés par des événements Git (commit, push, etc.). Parfait pour la qualité du code et les workflows d'équipe. |
+| Sujet                                          | Description                                                                                                                                                     |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **[Options de git init](git-init-options.md)** | Découvrez les paramètres avancés de `git init` pour initialiser des dépôts avec des configurations spécifiques, comme des templates ou des branches par défaut. |
-| **[Options de git push](git-push-options.md)** | Maîtrisez les flags de `git push` pour contrôler les publications, gérer les branches upstream et éviter les erreurs courantes. |
+| **[Options de git push](git-push-options.md)** | Maîtrisez les flags de `git push` pour contrôler les publications, gérer les branches upstream et éviter les erreurs courantes.                                 |
+| **[Git Alias](git-alias.md)**                  | Créez des raccourcis personnalisés pour vos commandes Git les plus utilisées. Transformez `git status` en `gs` et boostez votre productivité.                   |
+| **[Git Hooks](git-hook.md)**                   | Automatisez des actions avec des scripts déclenchés par des événements Git (commit, push, etc.). Parfait pour la qualité du code et les workflows d'équipe.     |
 
 Ces bonus sont conçus pour être appliqués immédiatement dans vos projets. Explorez-les après les modules principaux pour une maîtrise complète de Git.
 

@@ -58,7 +58,7 @@ d4e5f6a HEAD@{0}: reset: moving to HEAD~3
 ```bash
 git show HEAD@{2}                    # voir le commit 2 étapes en arrière
 git diff HEAD@{0} HEAD@{5}           # diff entre maintenant et 5 étapes avant
-git switch -C rescue HEAD@{1}      # créer une branche depuis l'état précédent
+git switch -C rescue HEAD@{1}        # créer une branche depuis l'état précédent
 git cherry-pick HEAD@{3}             # appliquer un commit "perdu"
 git reset --hard HEAD@{N}            # revenir à un état précédent
 ```

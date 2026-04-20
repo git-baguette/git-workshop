@@ -5,7 +5,7 @@ sidebar_position: 2
 # TP — Jongler avec 3 branches simultanément
 
 :::info Prérequis
-Avoir exécuté le [setup](/docs/setup). 
+Avoir exécuté le [setup](/docs/setup).
 
 Si vous avez déjà executé un autre module, lancer la commande `git switch main && git reset --hard origin/main`.
 
@@ -41,6 +41,9 @@ Vous êtes supposé être en train de travailler sur `feature/responsive-nav`. U
 
 **Sans quitter votre contexte de travail**, créez un worktree pour le hotfix :
 
+<details>
+  <summary>Afficher le code</summary>
+
 ```bash
 # Depuis le répertoire principal (ou n'importe quel worktree)
 git worktree add -b fix/schedule-sort ../ng-baguette-hotfix main
@@ -51,7 +54,12 @@ git worktree list
 # ~/git-workshop/ng-baguette-hotfix        <hash> [fix/schedule-sort]
 ```
 
+</details>
+
 **Dans un nouveau terminal**, travaillez sur le hotfix :
+
+<details>
+  <summary>Afficher le code</summary>
 
 ```bash
 cd ~/git-workshop/ng-baguette-hotfix
@@ -78,7 +86,12 @@ git commit -m "fix(schedule): restore chronological sort order in getSortedSessi
 # Exit: 0  ← bug corrigé
 ```
 
+</details>
+
 **Dans le premier terminal** (worktree principal), vérifiez que rien n'a bougé :
+
+<details>
+  <summary>Afficher le code</summary>
 
 ```bash
 # Dans ~/git-workshop/ng-baguette-conf
@@ -89,6 +102,8 @@ git branch
 git log --oneline feature/responsive-nav ^main
 # feat(nav): replace dropdown with drawer for mobile navigation  ← toujours là
 ```
+
+</details>
 
 Mergez le hotfix dans main :
 
@@ -101,19 +116,29 @@ git log --oneline -3
 
 Nettoyez le worktree hotfix :
 
+<details>
+  <summary>Afficher le code</summary>
+
 ```bash
 git worktree remove ../ng-baguette-hotfix
 git branch -d fix/schedule-sort
 ```
 
+</details>
+
 ## Exercice 3 — Travailler sur 2 features simultanément (15 min)
 
 Maintenant que le hotfix est en prod, vous reprenez vos features. Créez un worktree pour `feature/speaker-search` :
+
+<details>
+  <summary>Afficher le code</summary>
 
 ```bash
 git worktree add ../ng-baguette-search feature/speaker-search
 git worktree add ../ng-baguette-nav feature/responsive-nav
 ```
+
+</details>
 
 **Terminal 1** — Continuer `feature/responsive-nav` :
 
@@ -158,6 +183,9 @@ git add . && git commit -m "feat: add speakers listing page with search"
 
 Vérifier l'état global depuis n'importe quel worktree :
 
+<details>
+  <summary>Afficher le code</summary>
+
 ```bash
 git worktree list
 # ~/git-workshop/ng-baguette-conf          <hash> [main]
@@ -168,6 +196,8 @@ git worktree list
 git log --oneline feature/responsive-nav ^main
 git log --oneline feature/speaker-search ^main
 ```
+
+</details>
 
 ## Exercice 4 — Merge des features (5 min)
 
@@ -237,7 +267,7 @@ mkdir bare
 cd bare
 
 # Cloner le ng-baguette-conf existant en bare
-git clone --bare https://github.com/yatho/git-workshop-starter.git .git
+git clone --bare https://github.com/git-baguette/git-workshop-starter.git .git
 
 # Créer les worktrees depuis le bare
 git worktree add ./nb-main main

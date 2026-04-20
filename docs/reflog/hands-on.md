@@ -5,7 +5,7 @@ sidebar_position: 2
 # TP — Ressusciter des commits perdus
 
 :::info Prérequis
-Avoir exécuté le [setup](/docs/setup). 
+Avoir exécuté le [setup](/docs/setup).
 
 Si vous avez déjà executé un module précedent, lancer la commande `git switch main && git reset --hard origin/main`.
 
@@ -72,6 +72,11 @@ jkl3456 HEAD@{3}: commit: feat(sponsors): add Vercel as gold sponsor
 
 ### Récupération
 
+Il existe plusieurs solutions pour récupérer les commits perdus par l'utilisation du reflog. Votre objectif est de récupérer les commits supprimés par erreur.
+
+<details>
+  <summary>Afficher le code</summary>
+
 ```bash
 # Option 1 : revenir exactement où on était
 git reset --hard HEAD@{1}
@@ -83,6 +88,8 @@ git log --oneline -5
 # Option 2 : si vous avez noté le hash
 git reset --hard $LAST
 ```
+
+</details>
 
 :::tip Réflexe à avoir
 Avant tout `git reset --hard`, notez le hash actuel :

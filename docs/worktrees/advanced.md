@@ -10,7 +10,7 @@ Au lieu de cloner normalement, clonez en bare et utilisez uniquement des worktre
 
 ```bash
 # Cloner le repo en bare (pas de working tree)
-git clone --bare https://github.com/yatho/git-workshop-starter.git ng-baguette-conf.git
+git clone --bare https://github.com/git-baguette/git-workshop-starter.git ng-baguette-conf.git
 cd ng-baguette-conf.git
 
 # Créer des worktrees pour les branches dont vous avez besoin
