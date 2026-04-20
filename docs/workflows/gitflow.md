@@ -39,7 +39,7 @@ release/1.1                        ●──●───────────
 ### Initialisation
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 git switch main
 
 # develop est la branche d'intégration

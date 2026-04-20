@@ -32,10 +32,10 @@ Un **worktree** est un répertoire de travail supplémentaire lié à votre dép
 Pas de duplication. Pas de re-téléchargement. Pas de `node_modules` à réinstaller.
 
 ```
-~/git-workshop/ng-baguette-conf/.git/    ← tous les objets Git (partagés)
-~/git-workshop/ng-baguette-conf/         ← worktree principal (feature/dark-mode)
-~/git-workshop/ng-baguette-hotfix/       ← worktree lié    (fix/login-prod)
-~/git-workshop/ng-baguette-export/       ← worktree lié    (feature/export-csv)
+$WORKSHOP_DIR/ng-baguette-conf/.git/    ← tous les objets Git (partagés)
+$WORKSHOP_DIR/ng-baguette-conf/         ← worktree principal (feature/dark-mode)
+$WORKSHOP_DIR/ng-baguette-hotfix/       ← worktree lié    (fix/login-prod)
+$WORKSHOP_DIR/ng-baguette-export/       ← worktree lié    (feature/export-csv)
 ```
 
 Trois branches, trois terminaux, zéro stash.

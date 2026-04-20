@@ -15,7 +15,7 @@ Le projet ng-baguette-conf doit être fonctionnel.
 ## Vérifier la présence du bug
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 ./bisect-test.sh; echo "Exit: $?"
 # Exit: 1  ← le bug est là
 ```

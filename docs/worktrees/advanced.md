@@ -78,7 +78,7 @@ ls .git/worktrees/
 
 # Pour chaque worktree lié :
 cat .git/worktrees/ng-baguette-hotfix/gitdir
-# ~/git-workshop/ng-baguette-hotfix/.git
+# $WORKSHOP_DIR/ng-baguette-hotfix/.git
 # (fichier dans le working tree qui pointe vers ici)
 
 cat .git/worktrees/ng-baguette-hotfix/HEAD

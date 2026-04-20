@@ -9,17 +9,17 @@ Avoir exécuté le [setup](/docs/setup).
 
 Si vous avez déjà executé un autre module, lancer la commande `git switch main && git reset --hard origin/main`.
 
-Ng-baguette-conf doit exister dans `~/git-workshop/ng-baguette-conf` avec les branches `feature/responsive-nav` et `feature/speaker-search`.
+Ng-baguette-conf doit exister dans `$WORKSHOP_DIR/ng-baguette-conf` avec les branches `feature/responsive-nav` et `feature/speaker-search`.
 :::
 
 ## Exercice 1 — Visualiser la situation initiale (5 min)
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 
 # État actuel
 git worktree list
-# ~/git-workshop/ng-baguette-conf  <hash> [main]
+# $WORKSHOP_DIR/ng-baguette-conf  <hash> [main]
 
 # Branches disponibles
 git branch
@@ -50,8 +50,8 @@ git worktree add -b fix/schedule-sort ../ng-baguette-hotfix main
 
 # Vérifier
 git worktree list
-# ~/git-workshop/ng-baguette-conf          <hash> [main]
-# ~/git-workshop/ng-baguette-hotfix        <hash> [fix/schedule-sort]
+# $WORKSHOP_DIR/ng-baguette-conf          <hash> [main]
+# $WORKSHOP_DIR/ng-baguette-hotfix        <hash> [fix/schedule-sort]
 ```
 
 </details>
@@ -62,7 +62,7 @@ git worktree list
   <summary>Afficher le code</summary>
 
 ```bash
-cd ~/git-workshop/ng-baguette-hotfix
+cd $WORKSHOP_DIR/ng-baguette-hotfix
 
 # Vérifier qu'on est bien sur fix/schedule-sort
 git branch
@@ -94,7 +94,7 @@ git commit -m "fix(schedule): restore chronological sort order in getSortedSessi
   <summary>Afficher le code</summary>
 
 ```bash
-# Dans ~/git-workshop/ng-baguette-conf
+# Dans $WORKSHOP_DIR/ng-baguette-conf
 git branch
 # * main   ← on n'a pas bougé
 
@@ -108,7 +108,7 @@ git log --oneline feature/responsive-nav ^main
 Mergez le hotfix dans main :
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 git merge fix/schedule-sort --ff-only
 git log --oneline -3
 # fix(schedule): restore chronological sort order  ← le fix est là
@@ -143,7 +143,7 @@ git worktree add ../ng-baguette-nav feature/responsive-nav
 **Terminal 1** — Continuer `feature/responsive-nav` :
 
 ```bash
-cd ~/git-workshop/ng-baguette-nav
+cd $WORKSHOP_DIR/ng-baguette-nav
 
 # Ajouter le listener ESC à la fin de Drawer.astro
 cat >> src/components/Drawer.astro << 'EOF'
@@ -165,7 +165,7 @@ git commit -m "feat(nav): add ESC key to close mobile drawer"
 **Terminal 2** — Continuer `feature/speaker-search` :
 
 ```bash
-cd ~/git-workshop/ng-baguette-search
+cd $WORKSHOP_DIR/ng-baguette-search
 
 # Ajouter la page speakers
 cat > src/pages/fr/speakers.astro << 'EOF'
@@ -188,9 +188,9 @@ Vérifier l'état global depuis n'importe quel worktree :
 
 ```bash
 git worktree list
-# ~/git-workshop/ng-baguette-conf          <hash> [main]
-# ~/git-workshop/ng-baguette-nav           <hash> [feature/responsive-nav]
-# ~/git-workshop/ng-baguette-search        <hash> [feature/speaker-search]
+# $WORKSHOP_DIR/ng-baguette-conf          <hash> [main]
+# $WORKSHOP_DIR/ng-baguette-nav           <hash> [feature/responsive-nav]
+# $WORKSHOP_DIR/ng-baguette-search        <hash> [feature/speaker-search]
 
 # Voir les branches dans leur état respectif
 git log --oneline feature/responsive-nav ^main
@@ -202,7 +202,7 @@ git log --oneline feature/speaker-search ^main
 ## Exercice 4 — Merge des features (5 min)
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 git switch main
 
 # Nettoyer le worktree nav
@@ -222,7 +222,7 @@ git branch -D feature/speaker-search
 # Nettoyage
 git worktree prune
 git worktree list
-# ~/git-workshop/ng-baguette-conf  <hash> [main]
+# $WORKSHOP_DIR/ng-baguette-conf  <hash> [main]
 ```
 
 ## Exercice 5 — Contrainte : même branche dans 2 worktrees (2 min)
@@ -236,10 +236,10 @@ git worktree add ../test-wt main
 # Essayer d'accéder à test-branch depuis le second worktree
 cd ../test-wt
 git switch test-branch
-# fatal: 'test-branch' is already used by worktree at '~/git-workshop/ng-baguette-conf'
+# fatal: 'test-branch' is already used by worktree at '$WORKSHOP_DIR/ng-baguette-conf'
 
 # Nettoyage
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 git worktree remove ../test-wt
 git switch main
 git branch -d test-branch
@@ -262,7 +262,7 @@ git worktree prune
 Pour les plus rapides : refaites l'exercice avec le setup **bare repo + worktrees** (le pattern le plus propre pour les équipes avancées) :
 
 ```bash
-cd ~/git-workshop
+cd $WORKSHOP_DIR
 mkdir bare
 cd bare
 
@@ -275,10 +275,10 @@ git worktree add ./nb-feature feature/responsive-nav 2>/dev/null || echo "branch
 
 # Comparer la structure
 ls -la ./nb-main/
-# Pas de .git/ mais un fichier .git qui pointe vers ~/git-workshop/bare/.git
+# Pas de .git/ mais un fichier .git qui pointe vers $WORKSHOP_DIR/bare/.git
 
 cat ./nb-main/.git
 # gitdir: /home/user/git-workshop/bare/.git/worktrees/nb-main
 ```
 
-**Question :** quelle est la différence entre `~/git-workshop/ng-baguette-conf/.git/` et `~/git-workshop/bare/.git/` ?
+**Question :** quelle est la différence entre `$WORKSHOP_DIR/ng-baguette-conf/.git/` et `$WORKSHOP_DIR/bare/.git/` ?

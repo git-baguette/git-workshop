@@ -21,7 +21,7 @@ Ces commandes créent 3 commits sur main pour simuler "un travail récent à ne 
 :::
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 git switch main
 
 # Créer 3 commits qui vont "disparaître"
@@ -112,7 +112,7 @@ Si vous avez utilisé le script de setup, la branche est déjà supprimée — p
 Si vous avez cloné le repo, simulez l'accident maintenant :
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 git switch main
 
 # Vérifier que la branche n'existe pas déjà
@@ -210,7 +210,7 @@ Ce scénario crée sa propre branche — pas de dépendance avec les autres modu
 :::
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 git switch main
 
 # Créer une branche feature qui diverge de main

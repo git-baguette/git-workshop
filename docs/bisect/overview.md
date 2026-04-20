@@ -15,7 +15,7 @@ sidebar_position: 1
 Un bug est en prod. Vous regardez votre historique :
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 git log --oneline | wc -l
 # 32 commits
 

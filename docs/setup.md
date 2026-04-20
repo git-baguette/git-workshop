@@ -16,10 +16,27 @@ Faites ceci avant tout autre module. Tous les TPs s'appuient sur ce projet.
 - Une **branche supprimée** `feature/cfp-form` à retrouver avec reflog
 - Un **script de test** pour bisect automatisé
 
+## Choisir l'emplacement du workshop
+
+Choisissez le dossier dans lequel vous souhaitez travailler. Par défaut : `~/git-workshop`.
+
+```bash
+# Modifiez ce chemin si vous le souhaitez
+export WORKSHOP_DIR=~/git-workshop
+```
+
+:::tip Variable d'environnement
+Tous les TPs utilisent `$WORKSHOP_DIR`. Si vous ouvrez un nouveau terminal, pensez à ré-exporter la variable ou ajoutez-la à votre `~/.bashrc` / `~/.zshrc` :
+
+```bash
+echo 'export WORKSHOP_DIR=~/git-workshop' >> ~/.bashrc  # ou ~/.zshrc
+```
+:::
+
 ## Cloner le repo
 
 ```bash
-mkdir -p ~/git-workshop && cd ~/git-workshop
+mkdir -p $WORKSHOP_DIR && cd $WORKSHOP_DIR
 git clone https://github.com/git-baguette/git-workshop-starter.git ng-baguette-conf
 cd ng-baguette-conf
 git fetch origin feature/responsive-nav:feature/responsive-nav
@@ -49,7 +66,7 @@ Si vous ne pouvez pas cloner le repo, vous pouvez recréer l'historique depuis z
 
 ```bash
 bash /path/to/git-workshop-starter/scripts/setup-workshop.sh
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 ```
 
 Le script tourne en moins de 30 secondes et crée exactement le même historique.

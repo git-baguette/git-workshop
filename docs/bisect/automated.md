@@ -22,7 +22,7 @@ Git évalue la commande après chaque checkout :
 ## Application au projet ng-baguette-conf
 
 ```bash
-cd ~/git-workshop/ng-baguette-conf
+cd $WORKSHOP_DIR/ng-baguette-conf
 
 git bisect start
 git bisect bad HEAD

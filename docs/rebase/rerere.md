@@ -46,7 +46,7 @@ Les résolutions sont stockées dans `.git/rr-cache/` :
 ### Setup
 
 ```bash
-cd ~/git-workshop
+cd $WORKSHOP_DIR
 mkdir rerere-demo && cd rerere-demo
 git init -b main
 git config rerere.enabled true
@@ -157,5 +157,5 @@ rm -rf .git/rr-cache
 ## Nettoyage
 
 ```bash
-cd ~/git-workshop && rm -rf rerere-demo
+cd $WORKSHOP_DIR && rm -rf rerere-demo
 ```
