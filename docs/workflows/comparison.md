@@ -6,16 +6,16 @@ sidebar_position: 5
 
 ## Tableau de décision
 
-| Critère | Gitflow | GitHub Flow | Trunk-Based |
-|---------|---------|-------------|-------------|
-| Rythme de déploiement | Mensuel / hebdomadaire | Quotidien / pluriquotidien | Continu |
-| Nombre de versions en prod | Plusieurs | Une | Une |
-| CI/CD requise | Non (utile) | Oui (indispensable) | Oui (critique) |
-| Feature flags | Non nécessaires | Optionnels | Indispensables |
-| Complexité du workflow | Élevée | Faible | Faible (discipline forte) |
-| Risque de merge hell | Élevé | Modéré | Faible |
-| Adapté aux petites équipes | Moyen | Oui | Oui |
-| Adapté aux grandes équipes | Oui | Oui | Oui |
+| Critère                    | Gitflow                | GitHub Flow                | Trunk-Based               |
+| -------------------------- | ---------------------- | -------------------------- | ------------------------- |
+| Rythme de déploiement      | Mensuel / hebdomadaire | Quotidien / pluriquotidien | Continu                   |
+| Nombre de versions en prod | Plusieurs              | Une                        | Une                       |
+| CI/CD requise              | Non (utile)            | Oui (indispensable)        | Oui (critique)            |
+| Feature flags              | Non nécessaires        | Optionnels                 | Indispensables            |
+| Complexité du workflow     | Élevée                 | Faible                     | Faible (discipline forte) |
+| Risque de merge complexe   | Élevé                  | Modéré                     | Faible                    |
+| Adapté aux petites équipes | Moyen                  | Oui                        | Oui                       |
+| Adapté aux grandes équipes | Oui                    | Oui                        | Oui                       |
 
 ## L'arbre de décision
 
@@ -98,15 +98,15 @@ git diff main...feature/my-feature --stat
 
 Format : `<type>(<scope>): <description>`
 
-| Type | Usage |
-|------|-------|
-| `feat` | Nouvelle fonctionnalité |
-| `fix` | Correction de bug |
+| Type       | Usage                                            |
+| ---------- | ------------------------------------------------ |
+| `feat`     | Nouvelle fonctionnalité                          |
+| `fix`      | Correction de bug                                |
 | `refactor` | Refactoring (pas de new feature, pas de bug fix) |
-| `test` | Ajout ou modification de tests |
-| `docs` | Documentation |
-| `chore` | Tâches de maintenance (deps, config) |
-| `ci` | Pipeline CI/CD |
-| `perf` | Amélioration de performance |
+| `test`     | Ajout ou modification de tests                   |
+| `docs`     | Documentation                                    |
+| `chore`    | Tâches de maintenance (deps, config)             |
+| `ci`       | Pipeline CI/CD                                   |
+| `perf`     | Amélioration de performance                      |
 
 Avec ce format, vous pouvez générer un CHANGELOG automatiquement et déclencher des bumps de version sémantique.

@@ -15,9 +15,9 @@ Trunk-Based Development (TBD) pousse GitHub Flow à l'extrême : tout le monde c
 Les branches longues créent de la **dette d'intégration**. Plus une branche vit longtemps, plus elle diverge, plus le merge est douloureux. TBD élimine ce problème à la racine.
 
 ```
-main  ──●──●──●──●──●──●──●──●──●── (déployé en continu)
-         └─●─┘  └─●─┘  └─●─┘
-         (<2j)  (<2j)   (<2j)
+main  ──●───●──●───●──●───●──●──●──●── (déployé en continu)
+        └─●─┘  └─●─┘  └─●─┘
+        (<2j)  (<2j)  (<2j)
 ```
 
 ## Les feature flags : la clé de voûte
@@ -122,7 +122,7 @@ git commit -m "feat(analytics): enable analytics v2 by default"
 
 ### ✅ Avantages
 
-- Intégration vraiment continue — pas de "merge hell"
+- Intégration vraiment continue — pas de "merge complexe"
 - Feedback immédiat sur la qualité du code
 - Releases triviales (main est toujours prêt)
 - Détection précoce des conflits

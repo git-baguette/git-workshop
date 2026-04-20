@@ -16,10 +16,10 @@ Tout ce qui est sur `main` peut être mis en prod à n'importe quel moment. C'es
 
 ```
 main  ──●──────────────────────●──────────●──────── (déployé en continu)
-         │                     │          │
-         └── feature/A ──●──●──┘          │
-                                          │
-              feature/B ─────────●──●─────┘
+        │                      │          │
+        └── feature/A ──●──●───┘          │
+        │                                 │
+        └──── feature/B ─────────●──●─────┘
 ```
 
 Deux branches actives à tout moment : `main` et votre feature en cours.
@@ -91,7 +91,7 @@ Pas de branche spéciale — même process qu'une feature :
 
 ```bash
 git switch main
-git swithc -C fix/login-validation
+git switch -C fix/login-validation
 git commit -m "fix(auth): add input validation"
 # PR → review → merge → déploiement
 ```
@@ -103,8 +103,8 @@ C'est le seul vrai sujet de débat dans GitHub Flow. Voici les positions :
 ### Merge commit (`--no-ff`)
 
 ```
-main: A──B──M──────
-            │
+main:  A──B──M──────
+             │
 feature:  C──D
 ```
 

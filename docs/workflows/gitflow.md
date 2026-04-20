@@ -18,10 +18,10 @@ hotfix/login   ─┼──●──●─────────────�
 develop       ──●────────────────────────────●──────────── (intégration continue)
                 │         │        │
 feature/A      ─┼──●──●───┤        │
-                           │        │
-feature/B                  ●──●─────┤
-                                    │
-release/1.1                         ●──●────────────────── (freeze, bug fixes only)
+                          │        │
+feature/B                 ●──●─────┤
+                                   │
+release/1.1                        ●──●────────────────── (freeze, bug fixes only)
 ```
 
 ## Les 5 types de branches
@@ -129,6 +129,8 @@ git branch -d hotfix/login-crash
 Gitflow est souvent perçu comme **trop complexe pour la plupart des équipes modernes**. Vincent Driessen lui-même a ajouté une note à son article original :
 
 > _"If your team is doing continuous delivery of software, I would suggest to adopt a much simpler workflow (like GitHub Flow) instead of trying to shoehorn git-flow into your team."_
+
+[Lien vers l'article](https://nvie.com/posts/a-successful-git-branching-model/)
 
 Utilisez Gitflow si vous :
 
