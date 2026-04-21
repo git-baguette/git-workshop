@@ -22,7 +22,7 @@ Vos options actuelles :
 
 Un **worktree** est un répertoire de travail supplémentaire lié à votre dépôt. Chaque worktree a sa propre branche et son propre index, mais ils **partagent tous la même base d'objets Git** (commits, blobs, trees).
 
-Pas de duplication. Pas de re-téléchargement. Pas de `node_modules` à réinstaller.
+Pas de duplication. Pas de re-téléchargement.
 
 ```
 $WORKSHOP_DIR/ng-baguette-conf/.git/    ← tous les objets Git (partagés)
