@@ -37,7 +37,7 @@ git stash list
 
 ## Exercice 2 — L'urgence en prod (15 min)
 
-Vous êtes supposé être en train de travailler sur `feature/responsive-nav`. Une alerte arrive : l'agenda affiche les sessions en ordre anti-chronologique (le bug de `getSortedSessions` que vous découvrirez dans le module Bisect).
+Vous êtes supposé être en train de travailler sur `main`. Une alerte arrive : l'agenda affiche les sessions en ordre anti-chronologique (le bug de `getSortedSessions` que vous découvrirez dans le module Bisect).
 
 **Sans quitter votre contexte de travail**, créez un worktree pour le hotfix :
 
