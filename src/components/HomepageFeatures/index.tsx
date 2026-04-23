@@ -165,7 +165,7 @@ function DiscountCTA() {
         Offre spéciale participants
       </Heading>
       <p style={{ maxWidth: "640px", margin: 0 }}>
-        Profitez d'une réduction exclusive sur votre billet pour
+        Profitez d'une réduction exclusive sur votre billet pour{" "}
         <strong>NG Baguette Conf</strong> — la seule conférence Angular
         française.
       </p>
