@@ -139,6 +139,52 @@ function Feature({ title, emoji, badge, description, link }: FeatureItem) {
   );
 }
 
+function DiscountCTA() {
+  return (
+    <div
+      style={{
+        marginTop: "3rem",
+        padding: "2.5rem 2rem",
+        borderRadius: "1rem",
+        background:
+          "linear-gradient(135deg, rgba(236, 72, 153, 0.08), rgba(168, 85, 247, 0.08))",
+        border: "1px solid var(--ifm-color-primary-lightest)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        textAlign: "center",
+        gap: "1rem",
+      }}
+    >
+      <img
+        src="img/ng-baguette-logo.svg"
+        alt="NG Baguette Conf"
+        style={{ maxWidth: "260px", width: "100%", height: "auto" }}
+      />
+      <Heading as="h2" style={{ margin: 0 }}>
+        Offre spéciale participants
+      </Heading>
+      <p style={{ maxWidth: "640px", margin: 0 }}>
+        Profitez d'une réduction exclusive sur votre billet pour
+        <strong>NG Baguette Conf</strong> — la seule conférence Angular
+        française.
+      </p>
+      <p>
+        Code de réduction : <strong>NGBDEVOXX</strong> (20% de réduction sur les
+        billets individuels)
+      </p>
+      <a
+        className="button button--primary button--lg"
+        href="https://www.helloasso.com/associations/angular-nexus/evenements/ng-baguette-conf-2026"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Obtenir ma réduction →
+      </a>
+    </div>
+  );
+}
+
 export default function HomepageFeatures(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
   return (
@@ -153,6 +199,7 @@ export default function HomepageFeatures(): ReactNode {
             />
           ))}
         </div>
+        <DiscountCTA />
       </div>
     </section>
   );
