@@ -21,14 +21,14 @@ git config --global sequence.editor interactive-rebase-tool
 TODO: penser à inclure git-interactive-rebase-tool dans le codespace
 :::
 
-## TP — Une autre branche bourrée de commits intermédiaires
+## Exercice — Une autre branche bourrée de commits intermédiaires
 
 ### Situation de départ
 
 Imaginons que vous travailliez sur un nouveau composant de recherche. La branche `feature/search-bar` contient déjà un premier commit :
 
 ```bash
-cd ~/git-baguette/git-workshop-starter
+cd $WORKSHOP_DIR
 git switch feature/search-bar
 
 # historique initial

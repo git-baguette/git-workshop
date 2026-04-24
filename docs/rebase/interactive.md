@@ -18,17 +18,17 @@ pick d4e5f6 WIP: broken, dont merge
 pick e5f6a7 fix: actually make drawer close
 ```
 
-| Commande | Alias | Effet |
-|----------|-------|-------|
-| `pick` | `p` | Garder le commit tel quel |
-| `reword` | `r` | Garder le commit, modifier le message |
-| `edit` | `e` | S'arrêter pour modifier le contenu du commit |
-| `squash` | `s` | Fusionner avec le commit précédent, combiner les messages |
-| `fixup` | `f` | Fusionner avec le commit précédent, **garder seulement le message précédent** |
-| `drop` | `d` | Supprimer le commit |
-| (réordonner les lignes) | | Réordonner les commits |
+| Commande                | Alias | Effet                                                                         |
+| ----------------------- | ----- | ----------------------------------------------------------------------------- |
+| `pick`                  | `p`   | Garder le commit tel quel                                                     |
+| `reword`                | `r`   | Garder le commit, modifier le message                                         |
+| `edit`                  | `e`   | S'arrêter pour modifier le contenu du commit                                  |
+| `squash`                | `s`   | Fusionner avec le commit précédent, combiner les messages                     |
+| `fixup`                 | `f`   | Fusionner avec le commit précédent, **garder seulement le message précédent** |
+| `drop`                  | `d`   | Supprimer le commit                                                           |
+| (réordonner les lignes) |       | Réordonner les commits                                                        |
 
-## TP — `git commit --amend` — cas simple
+## Exercice — `git commit --amend` — cas simple
 
 Pour préparer le TP, créez un historique simple avec un dernier commit à amender :
 
@@ -54,7 +54,7 @@ git commit --amend --no-edit  # garde le même message
 `--amend` réécrit le commit (nouveau SHA). Ne jamais amender un commit déjà pushé sur une branche partagée.
 :::
 
-## TP — Supprimer un commit
+## Exercice — Supprimer un commit
 
 Pour préparer le TP, utilisez ce script simple :
 
@@ -84,7 +84,7 @@ git rebase -i HEAD~N
 Si le commit à supprimer modifie des fichiers que des commits suivants utilisent, `drop` créera des conflits. Résolvez-les normalement avec `git rebase --continue`.
 :::
 
-## TP — Squash/Fixup de commits WIP
+## Exercice — Squash/Fixup de commits WIP
 
 Pour préparer le TP, créez cet historique :
 
@@ -128,9 +128,10 @@ fixup  ghi789 chore: release v1.0.0
 ```
 
 :::tip `fixup` vs `squash`
+
 - `fixup` : garde le message du commit au-dessus, jette le reste
 - `squash` : vous demande de combiner les messages → ouvre l'éditeur
-:::
+  :::
 
 ## `--autosquash` : le raccourci magique
 
@@ -155,7 +156,7 @@ git config --global alias.fixup 'commit --fixup'
 git fixup HEAD~2  # crée un commit fixup! pour HEAD~2
 ```
 
-## TP — Réordonner des commits
+## Exercice — Réordonner des commits
 
 Pour préparer ce TP, utilisez ce script :
 
@@ -202,15 +203,14 @@ pick b feat: add CFP page
 drop  d test: add schedule tests
 ```
 
-
-## TP — Nettoyer l'historique de feature/responsive-nav
+## Exercice — Nettoyer l'historique de feature/responsive-nav
 
 ### Situation de départ
 
 La branche `feature/responsive-nav` ressemble à ça dans la vraie vie :
 
 ```bash
-cd ~/git-baguette/git-workshop-starter
+cd $WORKSHOP_DIR
 git switch feature/responsive-nav
 
 # Ce qu'on aimerait voir sur la branche

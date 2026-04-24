@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# TP — Débusquer le bug de tri dans NG Baguette Conf
+# Exercice — Débusquer le bug de tri dans NG Baguette Conf
 
 :::info Prérequis
 Avoir exécuté le [setup](/docs/setup).

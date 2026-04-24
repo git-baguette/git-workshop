@@ -4,6 +4,23 @@ sidebar_position: 10
 
 # Rebase vs Merge — Choisir au bon moment
 
+:::info Prérequis
+Avoir exécuté le [setup](/docs/setup).
+
+Si vous avez déjà executé un module précedent, lancer la commande
+
+```bash
+cd $WORKSHOP_DIR/ng-baguette-conf
+git branch -D feature/responsive-nav
+git branch -D feature/speaker-search
+git fetch origin feature/responsive-nav:feature/responsive-nav
+git fetch origin feature/speaker-search:feature/speaker-search
+git switch main && git reset --hard origin/main
+```
+
+Le projet ng-baguette-conf doit être fonctionnel.
+:::
+
 ## Les deux histoires du même projet
 
 Imaginez que vous travaillez sur `feature/dark-mode`. Pendant ce temps, deux commits sont arrivés sur `main` (un fix de login et une nouvelle feature de cache).
@@ -24,6 +41,7 @@ feature:  A──B──D──E──────M   (M = merge commit)
 ```
 
 `git log --graph --oneline` :
+
 ```
 *   abc123 Merge branch 'main' into feature/dark-mode
 |\
@@ -51,6 +69,7 @@ feature:                   D'──E'   (nouveaux SHA)
 ```
 
 `git log --oneline` :
+
 ```
 e5f6a7b feat(ui): add dark mode toggle
 d4e5f6a feat(theme): add theme system
@@ -61,10 +80,10 @@ nop678  feat(utils): add sortByPriority
 
 **→ Historique linéaire, comme si la feature avait été développée sur la version la plus récente.**
 
-## TP — Mettre à jour une feature branch avec rebase
+## Exercice — Mettre à jour une feature branch avec rebase
 
 ```bash
-cd ~/git-baguette/git-workshop-starter
+cd $WORKSHOP_DIR
 git switch feature/speaker-search
 
 # Vérifier la divergence avec main
@@ -86,7 +105,7 @@ git log --oneline -5
 # après tous les commits de main
 ```
 
-## TP — Gérer un conflit de rebase
+## Exercice — Gérer un conflit de rebase
 
 Les conflits en rebase se gèrent comme en merge, mais **un commit à la fois** :
 

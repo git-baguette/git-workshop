@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# TP — Ressusciter des commits perdus
+# Exercice — Ressusciter des commits perdus
 
 :::info Prérequis
 Avoir exécuté le [setup](/docs/setup).
@@ -25,6 +25,7 @@ cd $WORKSHOP_DIR/ng-baguette-conf
 git switch main
 
 # Créer 3 commits qui vont "disparaître"
+mkdir src/data
 echo "sponsor-gold: Google" >> src/data/sponsors.json 2>/dev/null || echo "Google" >> sponsors.txt
 git add -A && git commit -m "feat(sponsors): add Google as gold sponsor"
 
@@ -57,7 +58,7 @@ git log --oneline -3
 ### Diagnostic
 
 ```bash
-git reflog | head -10
+git reflog -10
 ```
 
 Vous verrez :

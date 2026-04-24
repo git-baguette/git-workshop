@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# TP — Jongler avec 3 branches simultanément
+# Exercice — Jongler avec 3 branches simultanément
 
 :::info Prérequis
 Avoir exécuté le [setup](/docs/setup).

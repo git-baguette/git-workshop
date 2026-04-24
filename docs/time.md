@@ -51,7 +51,7 @@ Faire le clone et vérifier l'historique. Si un participant bloque, l'aider en 1
 
 ### Module 4 — Rebase (35 minutes)
 
-Module souvent le plus long à digérer — prévoir du temps pour les questions sur le modèle mental avant d'attaquer le TP interactif.
+Module souvent le plus long à digérer — prévoir du temps pour les questions sur le modèle mental avant d'attaquer l'atelier interactif.
 
 ### Module 5 — Workflows (15 minutes)
 
