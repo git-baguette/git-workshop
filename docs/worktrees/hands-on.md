@@ -201,6 +201,10 @@ git log --oneline feature/speaker-search ^main
 
 ## Exercice 4 — Merge des features (5 min)
 
+:::info Note
+Vous aurez probablement un merge conflict à gérer sur cet exercice.
+:::
+
 ```bash
 cd $WORKSHOP_DIR/ng-baguette-conf
 git switch main
