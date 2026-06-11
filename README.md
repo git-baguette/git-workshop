@@ -16,6 +16,18 @@ yarn start
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
+If you want the Wi-Fi card to appear on the homepage, define both `WIFI_SSID` and `WIFI_PASSWORD` before starting the app. If `WIFI_SSID` is not set, the card stays hidden. If only `WIFI_SSID` is set, the card shows the SSID only.
+
+Examples:
+
+```bash
+WIFI_SSID="Git Workshop" WIFI_PASSWORD="12345678" yarn start
+```
+
+```bash
+WIFI_SSID="Git Workshop" yarn start
+```
+
 ## Build
 
 ```bash
