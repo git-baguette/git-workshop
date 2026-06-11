@@ -71,6 +71,11 @@ const config: Config = {
           label: 'Modules',
         },
         {
+          href: 'https://bit.ly/gitbaguette',
+          label: 'bit.ly/gitbaguette',
+          position: 'right',
+        },
+        {
           to: '/about',
           label: 'À propos',
           position: 'right',
