@@ -30,6 +30,10 @@ Vérifiez :
 # Exit: 1  ← le bug est là
 ```
 
+## Solution "naïve" : parcourir tous les commits
+
+![On teste tous les commits jusqu'à trouver le bon](/img/bisect_dummy-strat.jpg)
+
 ## La recherche binaire appliquée à Git
 
 `git bisect` utilise une **recherche dichotomique** sur votre historique :
@@ -38,7 +42,7 @@ Vérifiez :
 32 commits à tester → log₂(32) = 5 → 5 étapes maximum
 ```
 
-```
+<!-- ```
 [1 ─────────────── 16 ─────────────── 32]
                    ↑ bad
 [1 ──────── 8 ──── 16]
@@ -49,7 +53,9 @@ Vérifiez :
         ↑ good
 [10 ─ 11 ─ 12]
       ↑ bad → commit 11 est le premier mauvais !
-```
+``` -->
+
+![On saute de manière dichotomique à travers les commits](/img/bisect_bisect-strat.jpg)
 
 ## Les commandes
 
