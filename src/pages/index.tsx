@@ -53,7 +53,7 @@ function WifiCard() {
   const wifiSsid = customFields.wifiSsid?.trim();
   const wifiPassword = customFields.wifiPassword?.trim();
 
-  if (!wifiSsid || !wifiPassword) {
+  if (!wifiSsid) {
     return <></>;
   }
 
@@ -64,10 +64,12 @@ function WifiCard() {
         <span>SSID</span>
         <strong>{wifiSsid}</strong>
       </div>
-      <div className={styles.wifiRow}>
-        <span>Mot de passe</span>
-        <strong>{wifiPassword}</strong>
-      </div>
+      {wifiPassword ? (
+        <div className={styles.wifiRow}>
+          <span>Mot de passe</span>
+          <strong>{wifiPassword}</strong>
+        </div>
+      ) : null}
     </aside>
   );
 }
