@@ -25,7 +25,7 @@ cd $WORKSHOP_DIR/ng-baguette-conf
 git switch main
 
 # Créer 3 commits qui vont "disparaître"
-mkdir src/data
+mkdir -p src/data
 echo "sponsor-gold: Google" >> src/data/sponsors.json 2>/dev/null || echo "Google" >> sponsors.txt
 git add -A && git commit -m "feat(sponsors): add Google as gold sponsor"
 
