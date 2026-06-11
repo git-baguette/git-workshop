@@ -8,6 +8,10 @@ const config: Config = {
   title: 'Vous croyez connaître Git ?',
   tagline: 'Challenge Accepted — Worktrees, Reflog, Bisect, Workflows',
   favicon: 'img/favicon.ico',
+  customFields: {
+    ...(process.env.WIFI_SSID ? { wifiSsid: process.env.WIFI_SSID } : {}),
+    ...(process.env.WIFI_PASSWORD ? { wifiPassword: process.env.WIFI_PASSWORD } : {}),
+  },
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {

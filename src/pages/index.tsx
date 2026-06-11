@@ -44,6 +44,34 @@ function HomepageHeader() {
   );
 }
 
+function WifiCard() {
+  const { siteConfig } = useDocusaurusContext();
+  const customFields = siteConfig.customFields as {
+    wifiSsid?: string;
+    wifiPassword?: string;
+  };
+  const wifiSsid = customFields.wifiSsid?.trim();
+  const wifiPassword = customFields.wifiPassword?.trim();
+
+  if (!wifiSsid || !wifiPassword) {
+    return <></>;
+  }
+
+  return (
+    <aside className={styles.wifiCard} aria-label="Accès Wi-Fi">
+      <p className={styles.wifiKicker}>Wi-Fi</p>
+      <div className={styles.wifiRow}>
+        <span>SSID</span>
+        <strong>{wifiSsid}</strong>
+      </div>
+      <div className={styles.wifiRow}>
+        <span>Mot de passe</span>
+        <strong>{wifiPassword}</strong>
+      </div>
+    </aside>
+  );
+}
+
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
   return (
@@ -52,6 +80,7 @@ export default function Home(): ReactNode {
       description="Workshop Git avancé — Worktrees, Reflog, Bisect, Workflows. Hands-on, en français."
     >
       <HomepageHeader />
+      <WifiCard />
       <main>
         <HomepageFeatures />
       </main>
